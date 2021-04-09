@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+   
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+
+     <style>
+        .dropdown-toggle:hover{
+            text-decoration: none;
+        }
+
+        .donate-btn a{
+            color: #fff;
+            font-size: 13pt;
+        }
+
+        a:hover{
+            color: white;
+            border-bottom: 2px solid white;
+            text-decoration: none;
+        }
+
+
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="top-header-bar">
+            <div class="container">
+                <div class="row flex-wrap justify-content-center justify-content-lg-between align-items-lg-center">
+                    <div class="col-12 col-lg-8 d-none d-md-flex flex-wrap justify-content-center justify-content-lg-start mb-3 mb-lg-0">
+                        <div class="header-bar-email">
+                            EMAIL: <a href="#">thecharityteste@gmail.com</a>
+                        </div><!-- .header-bar-email -->
+
+                        <div class="header-bar-text">
+                            <p>TELEFONE: <span>+24 3772 120 091 / +56452 4567</span></p>
+                        </div><!-- .header-bar-text -->
+                    </div><!-- .col -->
+
+
+                    {% if user.is_authenticated %}
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+                            style="background: #ff4800; color: white;" 
+                            >
+                                {{user.username}}
+                                {% if user.userprofile.image_url %}
+                                    <img class="img-profile rounded-circle" src="{{ user.userprofile.image_url }} " 
+                                        style="width: 50px; height: 50px;" 
+                                    >
+                                {%else%}
+                                    <img class="img-profile rounded-circle" src="{% static 'images/no-perfil.jpg' %}" 
+                                        style="width: 50px; height: 50px;" 
+                                    >
+
+                                {% endif %}
+                            </a>
+
+                             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink"
+                                style="
+                                    z-index: 10000;
+                                "    
+                             >  
+                                {% if user.is_superuser %}
+                                    <a class="dropdown-item" href="/causas/register/">Cadastrar causa</a>
+                                    <a class="dropdown-item" href="/completed">Causas concluídas</a>
+                                {% endif %}
+                                
+                                <a class="dropdown-item" href="/profile/{{ user.id }}">Perfil</a>
+                                
+                                <a class="dropdown-item" href="/logout">Sair</a>
+                            </div>
+
+                        </div>
+                    {% else %}
+                        <div class="donate-btn">
+                            <a href="/register">Seja voluntário</a>
+                        </div><!-- .donate-btn -->
+
+                        <div class="donate-btn">
+                            <a href="/login">Login</a>
+                        </div>
+                    {% endif %}
+                </div><!-- .row -->
+            </div><!-- .container -->
+        </div><!-- .top-header-bar -->
+
+        <div class="nav-bar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 d-flex flex-wrap justify-content-between align-items-center">
+                        <div class="site-branding d-flex align-items-center">
+                            <a class="d-block" href="/" rel="home"><img class="d-block" src="{% static 'images/logo_2.png' %}" alt="logo"></a>
+                        </div><!-- .site-branding -->
+
+                        <nav class="site-navigation d-flex justify-content-end align-items-center">
+                            <ul class="d-flex flex-column flex-lg-row justify-content-lg-end align-content-center">
+                                <li ><a href="/">Home</a></li>
+                                <li><a href="/sobre">Quem somos</a></li>
+                                <li><a href="/causas">Causas</a></li>
+                                <li><a href="/galeria">Galeria</a></li>
+                                <li><a href="/postagens">Postagens</a></li>
+                                <li><a href="/contato">Contato</a></li>
+                                <li><a href="/help">Ajuda</a></li>
+                            </ul>
+                        </nav><!-- .site-navigation -->
+
+                        <div class="hamburger-menu d-lg-none">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div><!-- .hamburger-menu -->
+                    </div><!-- .col -->
+                </div><!-- .row -->
+            </div><!-- .container -->
+        </div><!-- .nav-bar -->
+    </header><!-- .site-header -->
+
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+
+  <title>The Charity</title>
+   {% load static %}
+    {% include 'style.html' %}
+ <!-- Custom fonts for this template-->
+    <link rel="stylesheet" href="{% static 'vendor/fontawesome-free/css/all.min.css' %}">
+    <!-- Custom styles for this template-->
+  
+
+</head>
+
+<body class="single-page single-cause">
+
+  {% include "model-header.html" %}
+
+  <div class="container">
+
+    <div class="card o-hidden border-0 shadow-lg my-5">
+      <div class="card-body p-0">
+        <!-- Nested Row within Card Body -->
+        <div class="row">
+
+          <div class="col-lg-5 d-none d-lg-block bg-register-image"
+           style="background: url({% static 'images/logo.png' %}) no-repeat;
+                  background-position: center;
+                  background-size: 200px;">
+          </div>
+
+          <div class="col-lg-7">
+            <h1 class="text-center">
+              {% if causa %}
+                  Alterar Causa
+              {% else %}
+                  Cadastrar Causa
+              {% endif %}
+            </h1>
+            {% for message in messages %}
+              <div class="alert alert-danger" role="alert">
+                <strong>Erro! </strong>{{message}}
+              </div>
+            {% endfor %}
+            <div class="p-5">
+              <form class="user" name="form" enctype="multipart/form-data" action="submit", method="POST">
+                 {% csrf_token %}
+                 {{ form.as_p }}
+
+                 <input type="number" name="causa-id" class="form-control form-control-user" value="{{ causa.id }}" hidden>
+                <div class="form-group">
+                    <input name="titulo" type="text" class="form-control form-control-user"  placeholder="Titulo da causa" value="{{ causa.titulo }}" style="height: 50px; font-size: 11pt; color: black;" maxlength="60" size="60">
+                </div>
+                <div class="form-group">
+                  <input name="meta" type="number" class="form-control form-control-user" id="exampleInputEmail" placeholder="Meta da causa"  value="{{causa.meta}}" style="height: 50px; font-size: 11pt; color: black;" min="200">
+                </div>
+                
+               
+                <div class="form-group">
+                  <textarea name="descricao" class="form-control" id="exampleFormControlTextarea1" rows="4" placeholder="Descrição" style="font-size: 11pt; color: black;">{{ causa.descricao }}</textarea>
+                </div>
+                <div class="form-group">
+                  <textarea name="fins" class="form-control" id="exampleFormControlTextarea1" rows="4" placeholder="Fins da causa" style="font-size: 11pt; color: black;">{{causa.fins}}</textarea>
+                </div>
+                <div class="form-group">
+                  <textarea name="info" class="form-control" id="exampleFormControlTextarea1" rows="4" placeholder="Informações da causa" style="font-size: 11pt; color: black;">{{ causa.info }}</textarea>
+                </div>
+                <div class="form-group mt-4" style="width: 95%;">
+                  <label style="color: black;">Escolha uma imagem para a causa</label>
+                  <input type="file" class="form-control-file border" name="foto" accept="image/*">
+                </div>      
+
+                <tr>
+
+                <div>
+                  
+                  <button type="submit" class="btn btn-danger btn-user btn-block mt-5" style="font-size: 12pt; font-weight: bold">
+                    {% if causa %}
+                      Alterar Causa
+                    {% else %}
+                      Cadastrar Causa
+                    {% endif %}
+                  </button>
+                </div>
+                <hr>
+              </form>
+              <hr>
+              <div class="text-center">
+                <a class="small" href="/">Voltar a tela inicial!</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Bootstrap core JavaScript-->
+  
+  {% include 'model-js.html' %}
+
+</body>
+
+</html>

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <title>The Charity</title>
+    {% load static %}
+    <!-- Required meta tags -->
+    {% include "style.html" %}
+</head>
+<body>
+    {% include "model-header.html" %}
+    <div class="swiper-container hero-slider">
+
+            <div class="swiper-slide hero-content-wrap">
+                <img src="{% static 'images/hero.jpg' %}" alt="">
+
+                <div class="hero-content-overlay position-absolute w-100 h-100">
+                    <div class="container h-100">
+                        <div class="row h-100">
+                            <div class="col-12 col-lg-8 d-flex flex-column justify-content-center align-items-start">
+                                <header class="entry-header">
+                                    <h1>Doe</h1>
+                                    <h4>por um mundo melhor</h4>
+                                </header><!-- .entry-header -->
+
+                                <div class="entry-content mt-4">
+                                    <p>Bem vindo ao Site de doações que mais ajuda pessoas ao na região de Picos.</p>
+                                </div><!-- .entry-content -->
+
+
+                            </div><!-- .col -->
+                        </div><!-- .row -->
+                    </div><!-- .container -->
+                </div><!-- .hero-content-overlay -->
+            </div><!-- .hero-content-wrap -->
+
+
+
+
+
+
+
+
+
+        <!-- Add Arrows -->
+
+    </div><!-- .hero-slider -->
+
+
+
+
+
+    <div class="home-page-events">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-12 col-lg-6">
+                    <div class="upcoming-events">
+                        <div class="section-heading">
+                            <h2 class="entry-title">Postagens recentes</h2>
+                        </div><!-- .section-heading -->
+                         {% if evento %}
+                             {% for eve in evento %}
+                                <div class="event-wrap d-flex flex-wrap justify-content-between">
+                                <figure class="m-0">
+                                  <a href="/galeria/{{eve.id}}"> <img src="{{eve.foto.url}}" style="width:144px;height:144px;" alt="Image"></a>
+                                </figure>
+
+                                <div class="event-content-wrap">
+                                    <header class="entry-header d-flex flex-wrap align-items-center">
+                                        <h3 style="font-size:40px;"class="entry-title w-100 m-0"><a href="/galeria/{{eve.id}}">{{eve.titulo}}</a></h3>
+
+                                     <div class="posted-date">
+                                        <a>{{eve.data}}</a>
+                                     </div><!-- .posted-date -->
+
+
+
+                                    </header><!-- .entry-header -->
+
+
+
+                                 <div class="entry-footer">
+                                       <a href="/galeria/{{eve.id}}">Leia mais</a>
+                                  </div><!-- .entry-footer -->
+                             </div><!-- .event-content-wrap -->
+                            </div><!-- .event-wrap -->
+                            {% endfor %}
+                        {% else %}
+                            <strong> <p style="text-align:center;font-size:20px;">Não há postagens</p></strong>
+                        {% endif %}
+
+                    </div><!-- .upcoming-events -->
+                </div><!-- .col -->
+
+                <div class="col-12 col-lg-6">
+
+                    <div class="featured-cause">
+
+                        <div class="section-heading">
+                            <h2 class="entry-title">Causa em destaque</h2>
+                        </div><!-- .section-heading -->
+
+                        <div class="cause-wrap d-flex flex-wrap justify-content-between">
+                            {% if causa %}
+                              {% for c in causa %}
+                                <figure class="m-0">
+                                     <a href="/galeria/{{c.id}}">
+                                         <img src="{{c.foto.url}}" style="height:303px;width:246px;"alt="1234" >
+                                     </a>
+                                </figure>
+
+                                <div class="cause-content-wrap">
+                                    <header class="entry-header d-flex flex-wrap align-items-center">
+                                        <h3 class="entry-title w-100 m-0"><a href="/galeria/{{c.id}}">{{c.titulo}}</a></h3>
+
+                                        <div class="posted-date">
+                                            <a href="#">{{c.date}}</a>
+                                        </div><!-- .posted-date -->
+
+
+                                    </header><!-- .entry-header -->
+
+
+
+
+                                </div><!-- .cause-content-wrap -->
+
+                                <div class="fund-raised w-100">
+                                    <div class="featured-fund-raised-bar barfiller">
+                                        <div class="tipWrap">
+                                            <span class="tip"></span>
+                                        </div><!-- .tipWrap -->
+
+                                        <span class="fill" data-percentage="{{calc.calc}}"></span>
+                                    </div><!-- .fund-raised-bar -->
+
+                                    <div class="fund-raised-details d-flex flex-wrap justify-content-between align-items-center">
+                                        <div class="fund-raised-total mt-4">
+                                            Recebido: {{c.recebido}} R$
+                                        </div><!-- .fund-raised-total -->
+
+                                        <div class="fund-raised-goal mt-4">
+                                            Objetivo: {{c.meta}} R$
+                                        </div><!-- .fund-raised-goal -->
+                                    </div><!-- .fund-raised-details -->
+
+                                </div><!-- .fund-raised -->
+                                {% endfor %}
+                            {% else %}
+                                 <strong> <p style="text-align:center;font-size:20px;">Não há causas</p></strong>
+                            {% endif %}
+                        </div><!-- .cause-wrap -->
+
+                    </div><!-- .featured-cause -->
+
+                </div><!-- .col -->
+
+            </div><!-- .row -->
+        </div><!-- .container -->
+    </div><!-- .home-page-events -->
+
+    <div class="our-causes"   style="background-image:url('{% static 'images/cause-bg.jpg' %}') ;">
+        <div class="container">
+            <div class="row">
+                <div class="coL-12">
+                    <div class="section-heading">
+                        <h2 class="entry-title">Nossas causas</h2>
+                    </div><!-- .section-heading -->
+                </div><!-- .col -->
+            </div><!-- .row -->
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="swiper-container causes-slider">
+                        <div class="swiper-wrapper">
+                            {% if causas %}
+                                {% for causes in causas %}<!-- aqui começa o slideshow -->
+                                    <div class="swiper-slide">
+                                        <div class="cause-wrap">
+                                            <figure class="m-0">
+                                                <img style="height:212px;width:350px"src="{{causes.foto.url}}" alt="Imagem">
+
+                                                <div class="figure-overlay d-flex justify-content-center align-items-center position-absolute w-100 h-100">
+                                                    <a href="/galeria/{{causes.id}}/" class="btn gradient-bg mr-2">Doe agora</a>
+
+                                                </div><!-- .figure-overlay -->
+                                            </figure>
+
+                                            <div class="cause-content-wrap">
+                                                <header class="entry-header d-flex flex-wrap align-items-center">
+                                                    <h3 class="entry-title w-100 m-0" style="text-align:center;"><a href="/galeria/{{causes.id}}">{{causes.titulo}}</a></h3>
+                                                </header><!-- .entry-header -->
+
+
+
+                                                <div class="fund-raised w-300">
+                                                    <div class="fund-raised-bar-{{causes.id}} barfiller">
+                                                        <div class="tipWrap">
+                                                            <span class="tip"></span>
+                                                        </div><!-- .tipWrap -->
+
+                                                        <span class="fill" data-percentage="{{calc2|get_item:causes}}"></span>
+                                                    </div><!-- .fund-raised-bar -->
+
+                                                    <div class="fund-raised-details d-flex flex-wrap justify-content-between align-items-center">
+                                                        <div class="fund-raised-total mt-4">
+                                                            Recebido: {{causes.recebido}}R$
+                                                        </div><!-- .fund-raised-total -->
+
+                                                        <div class="fund-raised-goal mt-4">
+                                                            Objetivo: {{causes.meta}}R$
+                                                        </div><!-- .fund-raised-goal -->
+                                                    </div><!-- .fund-raised-details -->
+                                                </div><!-- .fund-raised -->
+                                            </div><!-- .cause-content-wrap -->
+                                        </div><!-- . -->
+                                    </div><!-- .swiper-slide cause-wrap  acaba aqui -->
+
+
+
+
+
+
+
+
+
+                             {% endfor %}<!--aqui acaba-->
+                            {% else %}
+                                <strong> <p style="text-align:center;font-size:20px;">Não há causas</p></strong>
+                            {% endif %}
+                        </div><!-- .swiper-wrapper -->
+
+                    </div><!-- .swiper-container -->
+
+                    <!-- Add Arrows -->
+                    <div class="swiper-button-next flex justify-content-center align-items-center">
+                        <span><svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1171 960q0 13-10 23l-466 466q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l393-393-393-393q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l466 466q10 10 10 23z"/></svg></span>
+                    </div>
+
+                    <div class="swiper-button-prev flex justify-content-center align-items-center">
+                        <span><svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1203 544q0 13-10 23l-393 393 393 393q10 10 10 23t-10 23l-50 50q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l50 50q10 10 10 23z"/></svg></span>
+                    </div>
+                </div><!-- .col -->
+            </div><!-- .row -->
+        </div><!-- .container -->
+    </div><!-- .our-causes -->
+
+    <div class="home-page-limestone">
+        <div class="container">
+            <div class="row align-items-end">
+                <div class="coL-12 col-lg-6">
+                    <div class="section-heading">
+                        <h2 class="entry-title">Nos gostamos de ajudar as pessoas na mais diferentes causas propostas. Após um ano de trabalho duro, muitos objetivos foram atingidos.</h2>
+
+                        <p class="mt-5">Doe, você pode fazer a diferença também.</p>
+                    </div><!-- .section-heading -->
+                </div><!-- .col -->
+
+                <div class="col-12 col-lg-6">
+                    <div class="milestones d-flex flex-wrap justify-content-between">
+                        <div class="col-12 col-sm-4 mt-5 mt-lg-0">
+                            <div class="counter-box">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <img src="{% static 'images/teamwork.png' %}" alt="">
+                                </div>
+
+                                <div class="d-flex justify-content-center align-items-baseline">
+                                    <div class="start-counter" data-to="1" data-speed="2000"></div>
+                                    <div class="counter-k">K</div>
+                                </div>
+
+                                <h3 class="entry-title">Crianças ajudadas</h3><!-- entry-title -->
+                            </div><!-- counter-box -->
+                        </div><!-- .col -->
+
+                        <div class="col-12 col-sm-4 mt-5 mt-lg-0">
+                            <div class="counter-box">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <img src="{% static 'images/donation.png' %}" alt="123">
+                                </div>
+
+                                <div class="d-flex justify-content-center align-items-baseline">
+                                    <div class="start-counter" data-to="7" data-speed="2000"></div>
+                                </div>
+
+                                <h3 class="entry-title">Poços de água</h3><!-- entry-title -->
+                            </div><!-- counter-box -->
+                        </div><!-- .col -->
+
+                        <div class="col-12 col-sm-4 mt-5 mt-lg-0">
+                            <div class="counter-box">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <img src="{% static 'images/dove.png' %}" alt="123">
+                                </div>
+
+                                <div class="d-flex justify-content-center align-items-baseline">
+                                    {% for u in cont_u.values %}
+                                        <div class="start-counter" data-to="{{u}}" data-speed="2000"></div>
+                                    {% endfor %}
+                                </div>
+
+                                <h3 class="entry-title">Voluntarios</h3><!-- entry-title -->
+                            </div><!-- counter-box -->
+                        </div><!-- .col -->
+                    </div><!-- .milestones -->
+                </div><!-- .col -->
+            </div><!-- .row -->
+        </div><!-- .container -->
+    </div><!-- .our-causes -->
+    {% if evento %}
+
+        {% include "model-footer.html" with teste=evento %}
+    {% else %}
+        {% include "model-footer.html" %}
+    {% endif %}
+    {% include "model-js.html" %}
+
+</body>
+</html>

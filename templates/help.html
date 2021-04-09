@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+	<meta charset="UTF-8">
+	<title>The Charity</title>
+	{% load static %}
+	{% include 'style.html' %}
+	<style> 
+		ul{
+			list-style-type: none;
+		}
+		
+
+		.container h3.title{
+			margin-top: 10vh;
+		}
+
+		.text-center .img-responsive{
+			margin: 0 auto;
+		}
+	</style>
+	
+</head>
+<body class="single-page contact-page">
+	{% include 'model-header.html' %}
+	<div class="page-header" style="background-image:url('{% static 'images/single-cause-bg.jpg' %}')">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h1>Ajuda</h1>
+                </div><!-- .col -->
+            </div><!-- .row -->
+        </div><!-- .container -->
+    </div><!-- .page-header -->
+	<div class="container" style="margin-bottom: 10vh;">
+		
+		<p>A página <strong>Ajuda</strong> possui o objetivo de lhe auxiliar no uso do <strong>The Charity</strong>,
+		para você aproveitar o máximo as funcionalidades presenrtes no <strong>The Charity</strong>. Leia bem as instruções e aproveite.
+		</p>
+		<div class="row">
+			<div class="col-sm-12 text-center">
+				<h3 class="title">Como se cadastrar?</h3>
+				<p>Para se cadastrar no <strong>The Charity</strong>, basta clicar em <a href="/register">Seja voluntário</a>, presente no cabeçalho e rodapé do site.</p>
+		
+				<img class="img-responsive" style="width: 50%;" src="{% static 'images/register-help.png' %}" alt="Registrar"/>
+					
+				<p>Para se cadastrar, siga os seguintes passos:</p>
+				<ul>
+					<li>Escolha um <strong>nome de usuário</strong> (Este servirá para efetuar o login)</li>
+					<li>Informe seu <strong>E-mail</strong> (Informe um E-mail válido, pois este será usado para recuperação de senha ou contato)</li>
+					<li>Escoha uma <strong>senha</strong> (no míninmo 8 dígitos e não possuir apenas números) </li>
+					<li>Escolha uma <strong>imagem de perfil</strong> (Este campo é opcional)</li>
+					<li>Clique em <strong>Registrar Conta</strong></li>
+				</ul>
+				<p>Após esses passos, você será redirecionado a página de <a href="/login">login</a>.</p>
+				
+
+				
+				<h3>Como realizar o login no <strong>The Charity?</strong></h3>
+				<p>Para realizar o login, pode clicar em <a href="/login">Login</a>, e será redirecionado a página de login.
+				</p>
+				
+				<img class="img-responsive" style="width: 50%;" src="{% static 'images/login-help.png' %}" alt="Registrar"/>
+						
+				<p>Para realizar o login, é preciso:</p>
+				<ul>
+					<li>Informar seu <strong>nome de usuário</strong> cadastrado</li>
+					<li>Informar sua <strong>senha</strong> cadastrada</li>
+					<li>Clicar no botão <strong>Entrar</strong></li>
+				</ul>
+				<p>Após confirmar suas credenciais, você será redirecionado a página inicial.</p>
+
+
+				<h3 class="title">Esqueceu a senha?</h3>
+				<p>Se você esqueceu sua senha, não se preocupe, pois é fácil redefini-la. Para você redefinir sua senha, basta clicar em <a href="/reset">Esqueceu sua senha?</a> abaixo do botão <strong>Entrar</strong>, localizado na página de <a href="/login">login</a>.</p>
+				
+				<img class="img-responsive" style="width: 50%;" src="{% static 'images/pass-help.png' %}" alt="Registrar"/>
+					
+				<p>Após isso, será redirecionado a página de recuperação da senha.</p>
+			
+				<img class="img-responsive" style="width: 50%;" src="{% static 'images/pass-help-2.png' %}" alt="Registrar"/>
+					
+				<p>Informe seu <strong>nome de usuário</strong> e será enviado uma solicitação ao seu E-mail cadastrado. Após cliacar no link enviado ao seu E-mail, você será redirecionado a página para informar sua nova senha.
+				</p>
+				<img class="img-responsive" style="width: 50%;" src="{% static 'images/pass-help-3.png' %}" alt="Registrar"/>
+						
+				<p>Após confirmar sua nova senha, será redirecionado a página de <a href="/login">login.</a></p>
+				
+
+				<h3 class="title">Perfil de usuário</h3>
+				<p>No perfil de usuário, será mostrado as informações sobre o usuário. Para acessar siga as instruções abaixo</p>
+				
+				<img class="img-responsive" style="width: 50%;" src="{% static 'images/perfil1.png' %}" alt="Registrar"/>
+					
+				
+				<p>Como mostra a imagem, clique em <strong>Perfil</strong>, e será redirecionado a página de <strong>perfil de usuário</strong>. Após isso será redirecionado a página, onde será mostrado as suas informações.</p>
+				
+				<img class="img-responsive" style="width: 50%;" src="{% static 'images/perfil2.png' %}" alt="Registrar"/>
+					
+				
+				<p>Em <strong>perfil</strong> você pode alterar seus dados. Para isso clique em <strong>Alterar Dados</strong>, e será levado a tela de alteração.</p>
+				
+				<img class="img-responsive" style="width: 50%;" src="{% static 'images/perfil3.png' %}" alt="Registrar"/>
+					
+				<p>Poderá alterar seus dados como nome de usuário, E-mail, senha e foto de perfil. Na alteração da senha,
+					ao clicar em <strong>Alterar senha?</strong>, você será levado a mesma tela de alteração de senha, como mostrado anteriormente.</p>
+				<p>Na tela de perfil, o usuário também poderá deletar sua conta, basta clicar em <strong>Deletar Conta</strong>, e será mostrado uma tela para confirmar a operação.</p>
+				
+				<img class="img-responsive" style="width: 50%;" src="{% static 'images/perfil4.png' %}" alt="Registrar"/>
+					
+				<p>Cliquem em <strong>Deletar</strong> para confirmar, ou em <strong>Cancelar</strong> para cancelar a operação.</p>
+				<p>No perfil também é mostrado as doações feitas pelo o usuário.</p>
+				
+				<img class="img-responsive" style="width: 50%;" src="{% static 'images/perfil5.png' %}" alt="Registrar"/>
+					
+				<h3 class="title">Como doar?</h3>
+				<p>Para doar, clique em uma causa e será redirecionado a tela com as informações sobre a causa. Nesta tela, abaixo das informações, possui um formulário com o valor a ser doado e duas opções de pagamento.</p>
+				
+				<img class="img-responsive" style="width: 50%;" src="{% static 'images/causa.png' %}" alt="Registrar"/>
+						
+				<p>O usuário pode optar por pagemento via <strong>cartão</strong>, onde terá que preencher com os dados do cartão, ou escolher via <strong>boleto</strong>, onde será gerado um boleto.</p>
+			</div>
+		</div>
+	</div>
+
+	{% if evento %}
+        {% include "model-footer.html" with teste=evento %}
+    {% else %}
+        {% include "model-footer.html" %}
+    {% endif %}
+
+	{% include 'model-js.html' %}
+</body>
+</html>

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <title>The Charity</title>
+
+    <!-- Required meta tags -->
+    {% load static %}
+    {% include "style.html" %}
+</head>
+<body class="single-page single-cause">
+    {% include "model-header.html" %}
+
+    <div class="page-header" style="background-image:url('{% static 'images/single-cause-bg.jpg' %}')">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h1>A Causa</h1>
+                </div><!-- .col -->
+            </div><!-- .row -->
+        </div><!-- .container -->
+    </div><!-- .page-header -->
+
+    <div class="highlighted-cause">
+
+        <div class="container">
+            {% if user.is_superuser and user.id == causa.usuario.id %}
+                <a href="/causas/register/?id={{ causa.id }}">
+                    <button type="button" class="btn btn-primary mr-5">Alterar causa</button>
+                </a>
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">Deletar causa</button>
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index: 10000;">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel"><strong>Deletar</strong></h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    Deseja excluir a causa <strong>{{causa.titulo}}</strong>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar
+                                    </button>
+
+                                    <a href="/galeria/delete/{{causa.id}}">
+                                        <button type="button" class="btn btn-danger">Deletar</button>
+                                    </a>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            <div class="row">
+                
+                <div class="col-12 col-lg-7 order-2 order-lg-1">
+                    {% for message in messages %}
+                        <div class="alert alert-danger" role="alert">
+                            {{message}}
+                        </div>
+                    {% endfor %}
+                    <div class="section-heading">
+                        <h2 class="entry-title">{{causa.titulo}}</h2>
+                    </div><!-- .section-heading -->
+
+
+
+                    <div class="fund-raised w-100 mt-5">
+                        <div class="featured-fund-raised-bar barfiller">
+                            <div class="tipWrap">
+                                <span class="tip"></span>
+                            </div><!-- .tipWrap -->
+
+                                <span class="fill" data-percentage="{{calc.calc}}"></span>
+                        </div><!-- .fund-raised-bar -->
+
+                        <div class="fund-raised-details d-flex flex-wrap justify-content-between align-items-center">
+                            <div class="fund-raised-total mt-4">
+                                Doado: {{causa.recebido}} R$
+                            </div><!-- .fund-raised-total -->
+
+                            <div class="fund-raised-goal mt-4">
+                                Objetivo: {{causa.meta}} R$
+                            </div><!-- .fund-raised-goal -->
+                        </div><!-- .fund-raised-details -->
+                    </div><!-- .fund-raised -->
+
+                   
+                </div><!-- .col -->
+
+                <div class="col-12 col-lg-5 order-1 order-lg-2">
+                    <img src="{{causa.foto.url}}" alt="imagem">
+                </div><!-- .col -->
+            </div><!-- .row -->
+            
+        </div><!-- .container -->
+    </div><!-- .highlighted-cause -->
+
+    <div class="short-content-wrap">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="short-content">
+                        <h3 class="entry-title">Descrição</h3>
+
+                        <p>{{causa.descricao}}</p>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="short-content">
+                        <h3 class="entry-title">Informações adicionais</h3>
+
+                        <p>{{causa.info}}</p>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="short-content">
+                        <h3 class="entry-title">Nosso objetivo</h3>
+
+                        <p>{{causa.fins}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="donation-form-wrap">
+                    <h2>Faça uma doação</h2>
+
+                    <h4 class="mt-5">O quanto você deseja doar para esta causa?</h4>
+
+
+                    <form class="donation-form" name="formDonate" action="submit", method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                         <div class="billing-information  d-flex flex-wrap justify-content-between align-items-center">
+                           <input type="number" name="causa-id" value="{{causa.id}}" hidden>
+                            <input type="number" id="nota" name="nota" class="form-control" min="1">
+                            
+                        </div>
+
+                       
+
+                        <!--<div class="billing-information  d-flex flex-wrap justify-content-between align-items-center">
+                            <h4 class="w-100 mt-5 mb-3">Informações de pagamento</h4>
+
+                            <input type="text" placeholder="Nome">
+                            <input type="email" placeholder="E-mail">
+                            <input type="text" placeholder="Endereço">
+                            <input type="text" placeholder="Cidade">
+                            <input type="text" placeholder="Estado">
+                            <input type="text" placeholder="País">
+                        </div>-->
+
+                        <div class="payment-type d-flex flex-wrap align-items-center">
+                            <h4 class="w-100 mt-5">Método de pagamento</h4>
+
+                            <label class="d-flex align-items-center mt-4">
+                                <input type="radio" name="card" value="Card"/>
+                                <span class="payment-type-radio"></span>
+                                <span class="centered-dot"></span>
+
+                                Cartão de crédito
+                            </label>
+
+                            <label class="d-flex align-items-center mt-4">
+                                <input type="radio" name="boleto" value="Boleto"/>
+                                <span class="payment-type-radio"></span>
+                                <span class="centered-dot"></span>
+
+                                Boleto
+                            </label>
+                        </div>
+                        <div class="container">
+                            <div class="Card select">
+                                <label class="mt-4">Nome do titular</label>
+                                <input type="text" class="form-control form-control-user" 
+                                style="width: 20%" name="titular">
+                                <label class="mt-2">Número do cartão de crédito</label>
+                                <input class="form-control form-control-user" type="text" 
+                                style="width: 20%;" name="numero" onkeypress="MascaraCartao(formDonate.numero)" 
+                                maxlength="19" />
+                                <label class="mt-2">Data de validade</label>
+                                <input type="text" class="form-control form-control-user" 
+                                style="width: 20%" maxlength="7" name="validade" 
+                                onkeypress="MascaraData(formDonate.validade)" 
+                                onblur="ValidaData(formDonate.validade)">
+
+                                <label class="mt-2">Código de segurança</label>
+                                <input type="text" maxlength="3" class="form-control form-control-user"
+                                style="width: 20%" max="999" name="cvc" onkeypress="MascaraCVC(formDonate.cvc)" 
+                                >
+                            </div>
+
+                            <div class="Boleto select">
+                                <label class="mt-4">Nome completo</label>
+                                <input type="text" name="nome" class="form-control form-control-user" 
+                                style="width: 20%">
+                                <label class="mt-4">CPF</label>
+                                <input type="text" name="cpf" class="form-control form-control-user" 
+                                style="width: 20%" maxlength="14" onkeypress="MascaraCPF(formDonate.cpf)"
+                                >
+                                <label class="mt-4">Endereço</label>
+                                <input type="text" name="endereco" class="form-control form-control-user" 
+                                style="width: 20%">
+                                <label class="mt-4">CEP</label>
+                                <input type="text" name="cep" class="form-control form-control-user" 
+                                style="width: 20%" onkeypress="MascaraCep(formDonate.cep)" maxlength="10" 
+                                >
+                            </div>
+
+                        </div>
+
+                       <button id="confirm-donate" onclick="confirm_donate()" class="btn btn-primary mt-5" type="submit">Efetivar Doação</button> 
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if evento %}
+
+        {% include "model-footer.html" with teste=evento %}
+    {% else %}
+        {% include "model-footer.html" %}
+    {% endif %}
+    {% include "model-js.html" %}
+
+    <script>
+
+        function confirm_donate(){
+            if(confirm('Tem certeza que deseja efetuar essa doação ?')){
+                document.formDonate.submit();
+            }
+        }
+        $(document).ready(function () {
+            $('input[type="radio"]').change(function () {
+                $('input[type="radio"]:checked').not(this).prop('checked', false);
+            });
+        });
+        $(document).ready(function () {
+            $('.select').not('Card').hide();
+            $('input[type="radio"]').click(function () {
+                var inputValue = $(this).attr("value");
+                var targetBox = $("." + inputValue);
+                $(".select").not(targetBox).hide();
+                $(targetBox).show();
+            });
+        });
+
+        function MascaraCep(cep){
+            if(mascaraInteiro(cep)==false){
+                event.returnValue = false;
+            }       
+            return formataCampo(cep, '00.000-000', event);
+        }
+
+        
+        function MascaraCPF(cpf){
+            if(mascaraInteiro(cpf)==false){
+                    event.returnValue = false;
+            }       
+            return formataCampo(cpf, '000.000.000-00', event);
+        }
+
+        
+
+        function MascaraCartao(cartao){
+            if(mascaraInteiro(cartao)==false){
+                    event.returnValue = false;
+            }       
+            return formataCampo(cartao, '0000 0000 0000 00', event);
+        }
+
+        function MascaraCVC(cvc){
+            if(mascaraInteiro(cvc)==false){
+                event.returnValue = false;
+            }       
+            return formataCampo(cvc, '000', event);
+        }
+
+        function MascaraData(data){
+            if(mascaraInteiro(data)==false){
+                    event.returnValue = false;
+            }       
+            return formataCampo(data, '00/0000', event);
+        }
+
+        
+
+        function mascaraInteiro(){
+            if (event.keyCode < 48 || event.keyCode > 57){
+                    event.returnValue = false;
+                    return false;
+            }
+            return true;
+        }
+
+        function formataCampo(campo, Mascara, evento) { 
+            var boleanoMascara; 
+
+            var Digitato = evento.keyCode;
+            exp = /\-|\.|\/|\(|\)| /g
+            campoSoNumeros = campo.value.toString().replace( exp, "" ); 
+
+            var posicaoCampo = 0;    
+            var NovoValorCampo="";
+            var TamanhoMascara = campoSoNumeros.length;; 
+
+            if (Digitato != 8) { // backspace 
+                for(i=0; i<= TamanhoMascara; i++) { 
+                    boleanoMascara  = ((Mascara.charAt(i) == "-") || (Mascara.charAt(i) == ".")
+                        || (Mascara.charAt(i) == "/")) 
+                    boleanoMascara  = boleanoMascara || ((Mascara.charAt(i) == "(") 
+                        || (Mascara.charAt(i) == ")") || (Mascara.charAt(i) == " ")) 
+                    if (boleanoMascara) { 
+                        NovoValorCampo += Mascara.charAt(i); 
+                        TamanhoMascara++;
+                    }else { 
+                        NovoValorCampo += campoSoNumeros.charAt(posicaoCampo); 
+                        posicaoCampo++; 
+                    }              
+                }      
+                campo.value = NovoValorCampo;
+                return true; 
+            }else { 
+                return true; 
+            }
+        }
+    </script>
+
+</body>
+</html>

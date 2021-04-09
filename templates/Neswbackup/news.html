@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Postagens</title>
+
+    <!-- Required meta tags -->
+    {% load static %}
+    {% include "style.html" %}
+</head>
+<body class="single-page news-page">
+    {% include "model-header.html" %}
+
+    <div class="page-header" style="background-image:url({%static 'images/news-bg.jpg' %})">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h1>Postagens</h1>
+                </div><!-- .col -->
+            </div><!-- .row -->
+        </div><!-- .container -->
+    </div><!-- .page-header -->
+
+    <div class="news-wrap">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-lg-8">
+                    {% if users %}
+                            {% for user in users %}
+                            <div class="news-content">
+                                <a href="/galeria/{{user.id}}"><img style="height:350px;width:690px;" src="{{user.foto.url}}" alt=""></a>
+
+                                <header class="entry-header d-flex flex-wrap justify-content-between align-items-center">
+                                    <div class="header-elements">
+                                        <div class="posted-date">{{user.data}}</div>
+
+                                        <h2 style="text-align:center;" class="entry-title"><a href="#">{{user.titulo}}</a></h2>
+
+                                        <div class="post-metas d-flex flex-wrap align-items-center">
+
+                                            <span class="post-author">por <a href="#">{{user.usuario}}</a></span>
+
+                                        </div>
+                                    </div>
+                                     <div class="donate-icon">
+                                        <a href="/galeria/{{user.id}}"><img src="{% static 'images/donate-icon.png' %}" alt="Img"></a>
+                                     </div>
+
+                                </header>
+
+
+
+                                <footer class="entry-footer">
+                                    <a href="/galeria/{{user.id}}" class="btn gradient-bg">Leia mais</a>
+                                </footer>
+                            </div>
+                            {% endfor %}
+                                     <style>
+                                        #pagina{
+                                            margin-top:20px;
+                                        }
+                                         #pagina li{
+                                            display: inline;
+                                            color:orange;
+                                         }
+                                         #pagina li::hover{
+                                            color:black;
+                                         }
+                                     </style>
+                                     {% if users.has_other_pages %}
+                                            <ul id="pagina">
+                                         {% if users.has_previous %}
+                                        <li><a href="?page={{ users.previous_page_number }}"> &laquo; </a></li>
+                                {% else %}
+                                        <li class="disabled"><span> &laquo; </span></li>
+                                                {% endif %}
+                                {% for i in users.paginator.page_range %}
+                                     {% if users.number == i %}
+                                    <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                                  {% else %}
+                                    <li><a href="?page={{ i }}">{{ i }}</a></li>
+                                  {% endif %}
+                                {% endfor %}
+                                {% if users.has_next %}
+                                  <li><a href="?page={{ users.next_page_number }}"> &raquo; </a></li>
+                                {% else %}
+                                  <li class="disabled"><span> &raquo; </span></li>
+                                {% endif %}
+                              </ul>
+                            {% endif %}
+
+                        </div>
+                        <script>
+                            function buscar_r(){
+                                var searchBtn = $('#search-btn');
+                                var searchFrm = $('#search-form');
+                                searchFrm.submit();
+                            }
+
+                              function buscar_r2(){
+                                var searchBtn2 = $('#search-btn2');
+                                var searchFrm2 = $('#search-form2');
+                                searchFrm2.submit();
+                            }
+
+                        </script>
+
+                        <div class="col-12 col-lg-4">
+                            <div class="sidebar">
+                                <div class="search-widget">
+                                    <form method="GET" id=search-form class="flex flex-wrap align-items-center">
+                                        <input name="search" type="search" placeholder="Pesquisar...">
+                                        <button onclick="buscar_r()" id="search-btn" type="submit" class="flex justify-content-center align-items-center"><i class="fa fa-search"></i></button>
+                                    </form><!-- .flex -->
+                                </div><!-- .search-widget -->
+                                {% else %}
+                                 <div class="search-widget">
+                                    <form method="GET" id=search-form2 class="flex flex-wrap align-items-center">
+                                        <input name="search" type="search" placeholder="Pesquisar...">
+                                        <button onclick="buscar_r2()" id="search-btn2" type="submit" class="flex justify-content-center align-items-center"><i class="fa fa-search"></i></button>
+                                    </form><!-- .flex -->
+                                </div><!-- .search-widget -->
+
+                                <strong> <p style="text-align:center;font-size:20px;">Não há postagens</p></strong>
+                                <strong> <a href="/postagens/" style="text-align:center;font-size:20px;">Voltar para a página de postagens </a> </strong>
+
+                            {% endif %}
+
+
+
+
+
+
+
+                                <div class="featured-cause">
+                                    {% if causa2 %}
+                                    <h2>Causas importantes</h2>
+                                    {% for c in causa2 %}
+                                    <div class="cause-wrap">
+                                        <figure class="m-0 position-relative">
+                                            <a href="/galeria/{{c.id}}"><img style="height:212px;width:350;" src="{{c.foto.url}}" alt="123"></a>
+                                        </figure>
+
+                                        <div class="cause-content-wrap">
+                                            <header class="entry-header d-flex flex-wrap align-items-center">
+                                                <h3 style="text-align:center;"class="entry-title w-100 m-0"><a href="/galeria/{{c.id}}">{{c.titulo}}</a></h3>
+                                            </header><!-- .entry-header -->
+
+
+
+                                            <div class="fund-raised w-100">
+                                                <div class="fund-raised-bar-{{c.id}} barfiller">
+                                                    <div class="tipWrap">
+                                                        <span class="tip"></span>
+                                                    </div><!-- .tipWrap -->
+
+                                                    <span class="fill" data-percentage="{{calc.calc}}"></span>
+                                                </div><!-- .fund-raised-bar -->
+
+                                                <div class="fund-raised-details d-flex flex-wrap justify-content-between align-items-center">
+                                                    <div class="fund-raised-total mt-4">
+                                                        Recebido: {{c.recebido}} R$
+                                                    </div><!-- .fund-raised-total -->
+
+                                                    <div class="fund-raised-goal mt-4">
+                                                        Objetivo: {{c.meta}} R$
+                                                    </div><!-- .fund-raised-goal -->
+                                                </div><!-- .fund-raised-details -->
+                                            </div><!-- .fund-raised -->
+                                        </div><!-- .cause-content-wrap -->
+                                    </div><!-- .cause-wrap -->
+                                    {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div><!-- .sidebar -->
+                </div><!-- .col -->
+            </div>
+        </div>
+    </div>
+
+   {% include "model-footer.html" %}
+    {% include "model-js.html" %}
+
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  {% load static %}
+  {% include 'style.html' %}
+  <title>The Charity</title>
+
+  <!-- Custom fonts for this template-->
+
+  <!-- Custom styles for this template-->
+
+</head>
+
+<body class="bg-gradient-primary">
+  {% include 'model-header.html' %}
+  <div class="container">
+
+    <!-- Outer Row -->
+    <div class="row justify-content-center">
+
+      <div class="col-xl-10 col-lg-12 col-md-9">
+
+        <div class="card o-hidden border-0 shadow-lg my-5">
+          <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="row">
+              <div class="col-lg-6 d-none d-lg-block " 
+                style="background: url({% static 'images/logo.png' %}) no-repeat;
+                       background-position: center;
+                       background-size: 200px;
+                "></div>
+              <div class="col-lg-6">
+                <div class="p-5">
+                  <div class="text-center">
+                   <h1 class="h4 text-gray-900 mb-2">Alterar a senha</h1>
+                   <p class="mb-4">Digite a sua nova senha <strong>{{user.email}}</strong></p>
+
+                  </div>
+                  <form class="user" , method="POST">
+                     {% csrf_token %}
+                    {{ form.as_p }}
+                    <input type="number" name="user-id" value="{{ user.id }}" hidden>
+                    <div class="form-group">
+                      <input type="Password" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Digite a nova senha" name="new_pass" minlength="8">
+                    </div>
+                    {% for message in messages %}
+                      <div class="alert alert-danger" role="alert">
+                          <strong>Erro! </strong>{{message}}
+                      </div>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-danger btn-user btn-block" style="color: white">
+                      Redefinir Senha
+                    </button>
+                  </form>
+                  <hr>
+                  {% if not user.is_authenticated %}
+                    <div class="text-center">
+                      <a class="small" href="/register">Criar conta!</a>
+                    </div>
+                    <div class="text-center">
+                      <a class="small" href="/login">Já possui uma conta? Entre!</a>
+                    </div>
+                  {% endif %}
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Bootstrap core JavaScript-->
+  {% include "model-js.html" %}
+
+</body>
+
+</html>

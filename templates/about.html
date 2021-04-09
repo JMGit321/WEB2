@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <title>The Charity</title>
+    {% load static %}
+    <!-- Required meta tags -->
+   {% include "style.html" %}
+<body class="single-page about-page">
+    {% include "model-header.html" %}
+
+
+
+    <div class="welcome-wrap">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-lg-6 order-2 order-lg-1">
+                    <div class="welcome-content">
+                        <header class="entry-header">
+                            <h2 class="entry-title">Bem-vindo ao nosso site: TheCharity</h2>
+                        </header><!-- .entry-header -->
+
+                        <div class="entry-content mt-5">
+                            <p>Esse site foi desenvolvido com o objetivo de ajudar na arrecadação de fundos para causas humanitárias, visando
+                                ajudar o maior número de pessoas possivel, garantindo o bem estar das pessoas menos favorecidas.
+                            Por meio de doações ajudamos aqueles que mais necessitam, atendendo as necessidades sociais da população.</p>
+                        </div><!-- .entry-content -->
+
+
+                    </div><!-- .welcome-content -->
+                </div><!-- .col -->
+
+                <div class="col-12 col-lg-6 order-1 order-lg-2">
+                    <img src="{% static 'images/welcome.jpg' %}" alt="welcome">
+                </div><!-- .col -->
+            </div><!-- .row -->
+        </div><!-- .container -->
+    </div><!-- .home-page-icon-boxes -->
+
+    <div class="about-stats">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="circular-progress-bar">
+                        <div class="circle" id="loader_1">
+                            <strong class="d-flex justify-content-center"></strong>
+                        </div>
+
+                        <h3 class="entry-title">Trabalho duro</h3>
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="circular-progress-bar">
+                        <div class="circle" id="loader_2">
+                            <strong class="d-flex justify-content-center"></strong>
+                        </div>
+
+                        <h3 class="entry-title">Puro Amor</h3>
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="circular-progress-bar">
+                        <div class="circle" id="loader_3">
+                            <strong class="d-flex justify-content-center"></strong>
+                        </div>
+
+                        <h3 class="entry-title">Ótimas ideias</h3>
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="circular-progress-bar">
+                        <div class="circle" id="loader_4">
+                            <strong class="d-flex justify-content-center"></strong>
+                        </div>
+
+                        <h3 class="entry-title">Boas decisões</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="about-testimonial">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-6 col-lg-5">
+                    <div class="testimonial-cont">
+                        <div class="entry-content">
+                            <p>Estudante de SI</p>
+                        </div>
+
+                        <div class="entry-footer d-flex flex-wrap align-items-center mt-5">
+                            <img src="{% static 'images/jose.jpg' %}" alt="123">
+
+                            <h4>José Maria dos Santos Leal, <span>Adm do site</span></h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 offset-lg-2 col-lg-5">
+                    <div class="testimonial-cont">
+                        <div class="entry-content">
+                            <p>Estudante de SI</p>
+                        </div>
+
+                        <div class="entry-footer d-flex flex-wrap align-items-center mt-5">
+                            <img src="{% static 'images/pedro.jpg' %}" alt="123">
+
+                           <h4>Pedro Hércules Sousa Dantas, <span>Adm do site</span></h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="help-us">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 d-flex flex-wrap justify-content-between align-items-center">
+                    <h2>Nos ajude à ajudar quem precisa</h2>
+
+                    <a class="btn orange-border" href="/causas/">Causas</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if evento %}
+
+        {% include "model-footer.html" with teste=evento %}
+    {% else %}
+        {% include "model-footer.html" %}
+    {% endif %}
+    {% include "model-js.html" %}
+
+
+</body>
+</html>

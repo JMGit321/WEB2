@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+	<meta charset="UTF-8">
+	<title>The Charity</title>
+	{% load static %}
+	{% include 'style.html' %}
+
+	<style>
+		.sub::after{
+			content: "";
+			width: 100%;
+			height: 3px;
+			background: #333333;
+			display: block;
+			margin: auto;
+		}
+		
+		.link-cause:hover{
+			color: blue;
+			font-weight: bold;
+			border-bottom: 1px solid blue
+		}
+
+	</style>
+</head>
+<body>
+	{% include 'model-header.html' %}
+
+	<div class="container">
+	    <div class="row">
+	        <div class="col-xs-12 col-sm-6 col-md-6">
+	            <div class="well well-sm">
+	                <div class="row">
+	                    <div class="col-sm-6 col-md-4">
+	                    	{% if user.userprofile.image_url %}
+	                        	<img src="{{ user.userprofile.image_url }}" alt="" class="img-rounded img-responsive" />
+	                        {% else %}
+								<img src="{% static 'images/no-perfil.jpg' %}" alt="" class="img-rounded img-responsive" />
+							{% endif %}
+	                    		
+	                    </div>
+	                    <div class="col-sm-6 col-md-8">
+	                        <h4>{{user.username}}</h4>
+	                        <p>
+	                            <i class="glyphicon glyphicon-envelope"></i>{{user.email}}
+	                        <!-- Split button -->
+	                        <div class="container">
+	                            <a href="/register/?id={{ user.id }}">
+	                            	<button type="button" class="btn btn-primary mr-3">Alterar Dados</button>
+	                        	</a>
+	                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">Deletar Conta</button>
+	                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index: 10000;">
+			                    	<div class="modal-dialog" role="document">
+			                        	<div class="modal-content">
+			                                <div class="modal-header">
+			                                    <h5 class="modal-title" id="exampleModalLabel"><strong>Deletar</strong></h5>
+			                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			                                        <span aria-hidden="true">&times;</span>
+			                                    </button>
+			                                </div>
+			                                <div class="modal-body">
+			                                    Deseja excluir sua conta?
+			                                </div>
+			                                <div class="modal-footer">
+			                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar
+			                                    </button>
+
+			                                    <a href="/profile/delete/{{user.id}}">
+			                                        <button type="button" class="btn btn-danger">Deletar</button>
+			                                    </a>
+			                                </div>
+			                        	</div>
+                    				</div>
+                				</div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+
+	<div class="container">
+		<h2 class="sub">Doações</h2>
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col">Causa</th>
+					<th scope="col">Valor Doado</th>
+					<th scope="col">Data</th>
+				</tr>
+			</thead>
+
+			{% for doacao in doacoes %}
+				<tbody>
+					<tr>
+						<td>{{doacao.causa.titulo}}</td>
+						<td>R$ {{doacao.valor}}</td>
+						<td>{{doacao.data}}</td>
+					</tr>
+				</tbody>
+			{% endfor %}
+		</table>
+	</div>
+
+	
+	{% if user.is_superuser %}
+		<div class="container">
+			<h2 class="sub">Causas</h2>
+			{% if causas %}
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">Causa</th>
+							<th scope="col">Recebido</th>
+							<th scope="col">Meta</th>
+							<th scope="col">Data</th>
+						</tr>
+					</thead>
+
+
+					{% for causa in causas %}
+						<tbody>
+							<tr>
+								
+								<td><a class="link-cause" href="/galeria/{{causa.id}}" style="color: blue;"> {{causa.titulo}}</a></td>
+								<td>R$ {{causa.recebido}} </td>
+								<td>R$ {{causa.meta}}</td>
+								<td>{{causa.data}}</td>
+							</tr>
+						</tbody>
+					{% endfor %}
+				</table>
+				{% else %}
+					<p>Não há causas cadastradas</p>
+				{% endif %}
+		</div>
+	{% endif %}
+
+
+	
+	{% include 'model-footer.html' %}
+	{% include "model-js.html" %}
+</body>
+</html>

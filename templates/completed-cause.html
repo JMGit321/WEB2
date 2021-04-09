@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+	<meta charset="UTF-8">
+	<title>The Charity</title>
+	{% load static %}
+	{% include 'style.html' %}
+</head>
+<body>
+
+{% include 'model-header.html' %}
+
+<div class="container">
+	<div class="row">
+		<div class="col-12">
+			<h1>Causas Completadas</h1>
+		</div>
+	</div>
+</div>
+
+<div class="container">
+		
+		{% if causas %}
+			<table class="table">
+
+
+				<thead>
+					<tr>
+						<th scope="col">Causa</th>
+						<th scope="col">Arrecadado</th>
+						<th scope="col">Meta</th>
+					</tr>
+				</thead>
+				
+				{% for causa in causas %}
+					<tbody>
+						<tr>
+							<td><a href="/galeria/{{ causa.id }}">{{causa.titulo}}</a></td>
+							<td>R$ {{causa.recebido}}</td>
+							<td>{{causa.meta}}</td>
+						</tr>
+					</tbody>
+				{% endfor %}
+			</table>
+		{% else %}
+			<h3>Não há causas concluídas</h3>
+		{% endif %}
+	</div>
+
+
+{% include 'model-footer.html' %}
+{% include 'model-js.html' %}	
+</body>
+</html>

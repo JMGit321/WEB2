@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+
+    {% load static %}
+</head>
+<body>
+    <footer class="site-footer">
+        <div class="footer-widgets" style="background: url('{% static 'images/foot-bg.jpg' %}') ">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <div class="foot-about">
+                            <h2><a class="foot-logo" href="#"><img src="{% static 'images/foot-logo.png' %}" alt=""></a></h2>
+
+                            <p>Ajude nos a ajudar aqueles que realmente necessitam de apoio para que eles tenham um futuro melhor.</p>
+                            <ul class="d-flex flex-wrap align-items-center">
+                                <li><a href="#"><i class="fa fa-pinterest-p"></i></a></li>
+                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                                <li><a href="#"><i class="fa fa-behance"></i></a></li>
+                                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                            </ul>
+                        </div><!-- .foot-about -->
+                    </div><!-- .col -->
+
+                    <div class="col-12 col-md-6 col-lg-3 mt-5 mt-md-0">
+                        <h2>Links úteis</h2>
+
+                        <ul>
+                           <li><a href="/sobre">Sobre nós</a></li>
+                            <li><a href="#">Seja um voluntário</a></li>
+                            <li><a href="/causas">Causas</a></li>
+                            <li><a href="/galeria">Galeria</a></li>
+                            <li><a href="/postagens">Postagens</a></li>
+                        </ul>
+                    </div><!-- .col -->
+
+                    <div class="col-12 col-md-6 col-lg-3 mt-5 mt-md-0">
+                        <div class="foot-latest-news">
+                            <h2>Ultimas postagens</h2>
+                            {% if teste %}
+                                {% for x in teste %}
+                                    <ul>
+                                     <li>
+                                            <h3 ><a href="/galeria/{{x.id}}">{{x.titulo}}</a></h3>
+                                            <div class="posted-date">{{x.data}}</div>
+                                        </li>
+                                    {% endfor %}
+                                    {% else %}
+                                        <h3><a href="#">Não há postagens</a></h3>
+                                    {% endif %}
+
+
+                            </ul>
+                        </div><!-- .foot-latest-news -->
+                    </div><!-- .col -->
+
+                    <div class="col-12 col-md-6 col-lg-3 mt-5 mt-md-0">
+                        <div class="foot-contact">
+                            <h2>Contato</h2>
+
+                            <ul>
+                                <li><i class="fa fa-phone"></i><span>+45 677 8993000 223</span></li>
+                                <li><i class="fa fa-envelope"></i><span>teste@.com</span></li>
+                                <li><i class="fa fa-map-marker"></i><span>R. Cícero Duarte, nº 905 - Junco, Picos - PI, 64607-670</span></li>
+                            </ul>
+                        </div><!-- .foot-contact -->
+
+
+                    </div><!-- .col -->
+                </div><!-- .row -->
+            </div><!-- .container -->
+        </div><!-- .footer-widgets -->
+
+        <div class="footer-bar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <p class="m-0"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This boostrap is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+                    </div><!-- .col-12 -->
+                </div><!-- .row -->
+            </div><!-- .container -->
+        </div><!-- .footer-bar -->
+    </footer><!-- .site-footer -->
+
+</body>
+</html>

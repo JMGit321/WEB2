@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    {% load static %}
+    <title>The Charity</title>
+    {% include "style.html" %}
+</head>
+<body class="single-page portfolio">
+    {% include "model-header.html" %}
+
+    <div class="page-header" style="background-image:url('{% static 'images/single-cause-bg.jpg' %}')">
+        <div class="container" >
+            <div class="row">
+                <div class="col-12" >
+                    <h1>Galeria</h1>
+                </div><!-- .col -->
+            </div><!-- .row -->
+        </div><!-- .container -->
+    </div><!-- .page-header -->
+
+    <div class="portfolio-wrap">
+
+        <div class="container">
+
+            <div class="row portfolio-container">
+                {% if causa %}
+                    {% for c in causa %}
+                            <div class="col-12 col-md-6 col-lg-4 portfolio-item">
+
+                                <div class="portfolio-cont">
+
+                                  <a href="/galeria/{{c.id}}/"><img style="height:212px; width:350px;"src="{{c.foto.url}}" alt=""></a>
+
+                                 <h3 class="entry-title"><a href="/galeria/{{c.id}}/">{{c.titulo}}</a></h3>
+                                    <h4>{{c.data}}</h4>
+
+                             </div>
+
+                            </div>
+
+                     {% endfor %}
+                {% else %}
+                    <strong> <p style="text-align:center;font-size:20px;">Não há causas</p></strong>
+                {% endif %}
+            </div>
+
+        </div>
+
+
+
+
+
+    </div>
+
+     {% if evento %}
+
+        {% include "model-footer.html" with teste=evento %}
+    {% else %}
+        {% include "model-footer.html" %}
+    {% endif %}
+    {% include "model-js.html" %}
+</body>
+</html>

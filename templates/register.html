@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+
+  <title>The Charity</title>
+   {% load static %}
+   {% include 'style.html' %}
+
+ <!-- Custom fonts for this template-->
+    <link rel="stylesheet" href="{% static 'vendor/fontawesome-free/css/all.min.css' %}">
+    <!-- Custom styles for this template-->
+  <style>
+    .link-senha{
+      font-weight: bold;
+    }
+
+    .link-senha:hover{
+      color: blue;
+      border-bottom: 2px solid blue;
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body class="bg-gradient-primary">
+    {% include 'model-header.html' %}
+
+  <div class="container">
+
+    <div class="card o-hidden border-0 shadow-lg my-5">
+      <div class="card-body p-0">
+        <!-- Nested Row within Card Body -->
+        <div class="row">
+
+          <div class="col-lg-5 d-none d-lg-block bg-register-image"
+           style="background: url({% static 'images/logo.png' %}) no-repeat;
+                  background-position: center;
+                  background-size: 200px;">
+          </div>
+
+          <div class="col-lg-7">
+            <div class="p-5">
+              <div class="text-center">
+                {% if user.is_authenticated %}
+                  <h1 class="h4 text-gray-900 mb-4">Alterar dados!</h1>
+                {% else %}
+                  <h1 class="h4 text-gray-900 mb-4">Criar conta!</h1>
+                {% endif %}
+              </div>
+              {% for message in messages %}
+                <div class="alert alert-danger" role="alert">
+                  <strong>Erro! </strong>{{message}}
+                </div>
+              {% endfor %}
+              <form class="user" method="POST" enctype="multipart/form-data">
+                 {% csrf_token %}
+                 {{ form.as_p }}
+                 
+                <input type="number" name="user-id" value="{{ user.id }}" hidden>
+                <div class="form-group">
+                    <input name="username" type="text" class="form-control form-control-user" id="exampleFirstName" placeholder="Nome de usuário" value="{{ user.username }}">
+                </div>
+                <div class="form-group">
+                  <input name="email" type="email" class="form-control form-control-user" id="exampleInputEmail" placeholder="E-mail" value="{{ user.email }}">
+                </div>
+                {% if not user.is_authenticated %}
+                  <div class="form-group row">
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                      <input name="password" type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Senha" minlength="8">
+                    </div>
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                      <input name="r_password" type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Repetir senha">
+                    </div>
+                  </div>
+                {% else %}
+                  <a href="/reset/?id={{user.id}}" class="link-senha">Alterar senha?</a>
+                {%endif%}
+                             
+
+                
+                
+                <div class="form-group mt-4" style="width: 95%;">
+                  <label style="color: black;">Escolha uma imagem de perfil (Opcional)</label>
+                  <input type="file" onblur="imageDefault(this)" class="form-control-file border" name="image" accept="image/*">
+                </div>      
+
+                <div>
+                  
+                  
+                  {% if user.is_authenticated%}
+                    <button type="submit" class="btn btn-danger btn-user btn-block" style="font-size: 12pt; font-weight: bold">
+                      Alterar Conta
+                    </button>
+                  {% else %}
+                    <button type="submit" class="btn btn-danger btn-user btn-block" style="font-size: 12pt; font-weight: bold">
+                      Registrar Conta
+                    </button>
+                  {% endif %}
+                </div>
+                <hr>
+              </form>
+              <hr>
+              <div class="text-center">
+                <a class="small" href="/login">Já possui uma conta? Entrar!</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- Bootstrap core JavaScript-->
+  {% include 'model-js.html' %}
+
+</body>
+
+</html>

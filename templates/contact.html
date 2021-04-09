@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <title>The Charity</title>
+    {% load static %}
+    <!-- Required meta tags -->
+    {% include "style.html" %}
+</head>
+<body class="single-page contact-page">
+    {% include "model-header.html" %}
+    <div class="page-header" style="background-image:url('{% static 'images/single-cause-bg.jpg' %}')">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h1>Contato</h1>
+                </div><!-- .col -->
+            </div><!-- .row -->
+        </div><!-- .container -->
+    </div><!-- .page-header -->
+
+    <div class="contact-page-wrap">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-lg-5">
+                    <div class="entry-content">
+                        <h2>De um feedback sobre sua opnião</h2>
+
+                        <p>Nos ajudar a melhorar o site por meio de sua opnião caro usuário, ela será muito bem vista, tendo como
+                            objetivo visar melhorar o site para que você tenha uma experiência melhor na horar de doar.</p>
+
+                        <ul class="contact-social d-flex flex-wrap align-items-center">
+                            <li><a href="#"><i class="fa fa-pinterest-p"></i></a></li>
+                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                            <li><a href="#"><i class="fa fa-behance"></i></a></li>
+                            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                        </ul>
+
+                        <ul class="contact-info p-0">
+                            <li><i class="fa fa-phone"></i><span>+45 677 8993000 223</span></li>
+                            <li><i class="fa fa-envelope"></i><span> thecharityteste@gmail.com</span></li>
+                            <li><i class="fa fa-map-marker"></i><span>R. Cícero Duarte, nº 905 - Junco, Picos - PI, 64607-670</span></li>
+                        </ul>
+                    </div>
+                </div><!-- .col -->
+
+                <div class="col-12 col-lg-7">
+                    <form class="contact-form">
+                        <input type="text" placeholder="Nome">
+                        <input type="email" placeholder="Email">
+                        <textarea rows="15" cols="6" placeholder="Mensagens"></textarea>
+
+                        <span>
+                            <input class="btn gradient-bg" type="submit" value="Contate-nos">
+                        </span>
+                    </form><!-- .contact-form -->
+
+                </div><!-- .col -->
+
+                <div class="col-12">
+                    <div class="contact-gmap">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63351.36149538523!2d-41.47260737291871!3d-7.072533812740124!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x79c1a9c5d138f79%3A0xc6310389d590337e!2sPicos%2C%20PI%2C%2064600-000!5e0!3m2!1spt-BR!2sbr!4v1585844292087!5m2!1spt-BR!2sbr" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+                    </div>
+                </div>
+            </div><!-- .row -->
+        </div><!-- .container -->
+    </div>
+
+   {% if evento %}
+
+        {% include "model-footer.html" with teste=evento %}
+    {% else %}
+        {% include "model-footer.html" %}
+    {% endif %}
+    {% include "model-js.html" %}
+
+</body>
+</html>
