@@ -353,6 +353,16 @@ def contato(request):
     return render(request,'contact.html',{'evento':evento})
 
 
+def sugestao(request):
+    causas_all2 =  Causa.objects.filter(ativo=True).order_by('-data')
+    cont = 0
+    evento = {}
+    for c in causas_all2:
+        evento[c] = c
+        cont+=1
+        if(cont==3):
+            break
+    return render(request, 'suggestion.html', {'evento':evento})
 
 @register.filter
 def get_item(dictionary, key):

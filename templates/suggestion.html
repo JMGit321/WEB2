@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>The Charity</title>
+    {% load static %}
+    <!-- Required meta tags -->
+    {% include "style.html" %}
+</head>
+<body>
+
+    <body class="single-page contact-page">
+        {% include "model-header.html" %}
+        <div class="page-header" style="background-image:url('{% static 'images/sugestao.jpg' %}')">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h1>Contato</h1>
+                    </div><!-- .col -->
+                </div><!-- .row -->
+            </div><!-- .container -->
+        </div><!-- .page-header -->
+
+    <div class="contact-page-wrap">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-lg-5">
+                    <div class="entry-content">
+                        <h2>Alguma sugestão de causas?</h2>
+                        <p>Nos ajude mandando sugestões para causas. Iremos analisar a sugestão, se a causa for aprovada 
+                            será adicionada em nosso site. A causa ficará disponível o mais breve possível.</p>
+    
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-7">
+                    <form class="contact-form">
+                        <input type="text" placeholder="Cidade">
+                        <input type="text" placeholder="Estado">
+                        <input type="text" placeholder="Quem precisa?">
+                        <input type="text" placeholder="Valor limite de arrecadação">
+                        <textarea rows="15" cols="6" placeholder="Nos explique a causa"></textarea>
+
+                        <span>
+                            <input class="btn gradient-bg" type="submit" value="Enviar sugestão">
+                        </span>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    {% if evento %}
+
+        {% include "model-footer.html" with teste=evento %}
+    {% else %}
+        {% include "model-footer.html" %}
+    {% endif %}
+    {% include "model-js.html" %}
+</body>
+</html>
