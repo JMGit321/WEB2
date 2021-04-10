@@ -44,6 +44,7 @@
 
 
                     {% if user.is_authenticated %}
+
                         <div class="dropdown">
                             <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
                             style="background: #ff4800; color: white;" 
@@ -61,7 +62,7 @@
                                 {% endif %}
                             </a>
 
-                             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink"
+                             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" aria-hidden="false"
                                 style="
                                     z-index: 10000;
                                 "    
@@ -69,8 +70,12 @@
                                 {% if user.is_superuser %}
                                     <a class="dropdown-item" href="/causas/register/">Cadastrar causa</a>
                                     <a class="dropdown-item" href="/completed">Causas concluídas</a>
+                                 <a class="dropdown-item" href="#">Sugestões dos usuários</a>
+                                 <a class="dropdown-item" href="#">Feedbacks</a>
                                 {% endif %}
-                                
+                                {% if not user.is_superuser %}
+                                 <a class="dropdown-item" href="#">Minhas opniões</a>
+                                 {% endif %}
                                 <a class="dropdown-item" href="/profile/{{ user.id }}">Perfil</a>
                                 
                                 <a class="dropdown-item" href="/logout">Sair</a>
@@ -107,6 +112,7 @@
                                 <li><a href="/postagens">Postagens</a></li>
                                 <li><a href="/contato">Contato</a></li>
                                 <li><a href="/help">Ajuda</a></li>
+                                <li><a href="/sugestao">Sugestão</a></li>
                             </ul>
                         </nav><!-- .site-navigation -->
 
