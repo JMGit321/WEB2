@@ -25,7 +25,7 @@ class Doacao(models.Model):
     data = models.DateField(auto_now=True)
     horario = models.TimeField(auto_now=True)
     def __str__(self):
-        return self.nome
+        return self.causa.titulo
 
     class Meta:
         db_table = 'doacao'
