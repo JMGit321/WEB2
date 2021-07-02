@@ -24,6 +24,7 @@ class Doacao(models.Model):
     causa = models.ForeignKey(Causa, on_delete=models.CASCADE)
     data = models.DateField(auto_now=True)
     horario = models.TimeField(auto_now=True)
+    pago = models.BooleanField(default=False)
     def __str__(self):
         return self.causa.titulo
 
@@ -44,3 +45,11 @@ class UserProfile(models.Model):
 
 
 
+class Sugestao(models.Model):
+    data = models.DateField(auto_now=True)
+    horario = models.TimeField(auto_now=True)
+    usuario = models.ForeignKey(User,on_delete=models.CASCADE)
+    texto = models.TextField()
+
+    class Meta:
+        db_table = 'sugestao'
