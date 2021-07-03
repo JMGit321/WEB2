@@ -482,11 +482,6 @@ def donate_cause(request, id):
                     if titular.isdigit():
                         messages.error(request, 'O nome titular não é válido!!!')
                     else:
-                        recebido = float(causa.recebido)
-                        causa.recebido = recebido + float(valor)
-                        if causa.recebido == causa.meta:
-                            causa.ativo = False
-                        causa.save()
                         messages.success(request, 'Doação efetuada com sucesso!!!')
                         doacao = Doacao.objects.create(valor=valor, usuario=usuario, causa=causa)
                         
@@ -520,6 +515,28 @@ def donate_cause(request, id):
     url = '/galeria/{}/'.format(id)
     return redirect(url)
 
+def donates(request):
+    causas = Causa.objects.all()
+    doacoes = Doacao.objects.filter(pago=False)
+    valor = 0
+    valores_dict = {}
+    valor = 0
+    for causa in causas:
+        for doacao in doacoes:
+          if causa.titulo == doacao.causa.titulo:
+              valor += doacao.valor
+        valores_dict[causa.titulo] = valor
+        valor = 0
+    return render(request, 'validate_donate.html', {'evento':causas, 'doacoes':doacoes})
+
+def validate_donate(request, id):
+    donate = Doacao.objects.get(id=id)
+    donate.pago = True
+    donate.causa.recebido += donate.valor
+    donate.causa.save()
+    donate.save()
+
+    return redirect('/validar/')
 
 def help(request):
     causa = Causa.objects.filter(ativo=True)

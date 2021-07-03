@@ -35,6 +35,8 @@ urlpatterns = [
     path('galeria/<id>/submit', views.donate_cause),
     path('sobre/',views.sobre),
     path('sugestao/', views.sugestao),
+    path('validar/', views.donates),
+    path('validar/confirm/<id>', views.validate_donate),
 
     path('login/',views.login_user),
     path('login/submit', views.submit_login),

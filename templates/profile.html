@@ -89,6 +89,7 @@
 					<th scope="col">Causa</th>
 					<th scope="col">Valor Doado</th>
 					<th scope="col">Data</th>
+					<th scope="col">Status</th>
 				</tr>
 			</thead>
 
@@ -98,6 +99,13 @@
 						<td>{{doacao.causa.titulo}}</td>
 						<td>R$ {{doacao.valor}}</td>
 						<td>{{doacao.data}}</td>
+						<td>
+							{% if doacao.pago == False %}
+								<p style="color: red;">PENDENTE</p>
+							{% else %}
+								<p style="color: blue;">CONFIRMADA</p>
+							{% endif %}
+						</td>
 					</tr>
 				</tbody>
 			{% endfor %}

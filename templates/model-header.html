@@ -9,6 +9,12 @@
     <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 
      <style>
+        
+         .top-header-bar{
+             background-color: #07889b;
+             color: #000;
+         }
+
         .dropdown-toggle:hover{
             text-decoration: none;
         }
@@ -47,7 +53,7 @@
 
                         <div class="dropdown">
                             <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
-                            style="background: #ff4800; color: white;" 
+                            style="background: #07889b; color: white;" 
                             >
                                 {{user.username}}
                                 {% if user.userprofile.image_url %}
@@ -70,8 +76,7 @@
                                 {% if user.is_superuser %}
                                     <a class="dropdown-item" href="/causas/register/">Cadastrar causa</a>
                                     <a class="dropdown-item" href="/completed">Causas concluídas</a>
-                                 <a class="dropdown-item" href="#">Sugestões dos usuários</a>
-                                 <a class="dropdown-item" href="#">Feedbacks</a>
+                                    <a class="dropdown-item" href="/validar">Validar doações</a>
                                 {% endif %}
                                 {% if not user.is_superuser %}
                                  <a class="dropdown-item" href="#">Minhas opniões</a>
