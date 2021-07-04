@@ -496,7 +496,8 @@ def donate_cause(request, id):
                 cep = request.POST.get('cep')
 
                 recebido = float(causa.recebido)
-                causa.recebido = recebido + float(valor)
+                #causa.recebido = recebido + float(valor)
+                #presta atenção nessas paradas, desleixado
                 if causa.recebido == causa.meta:
                     causa.ativo = False
                 causa.save()
@@ -533,6 +534,7 @@ def validate_donate(request, id):
     donate = Doacao.objects.get(id=id)
     donate.pago = True
     donate.causa.recebido += donate.valor
+    donate.causa.recebido
     donate.causa.save()
     donate.save()
 

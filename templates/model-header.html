@@ -11,12 +11,13 @@
      <style>
         
          .top-header-bar{
-             background-color: #07889b;
+             background-color: red;
              color: #000;
          }
 
         .dropdown-toggle:hover{
             text-decoration: none;
+
         }
 
         .donate-btn a{
@@ -51,9 +52,9 @@
 
                     {% if user.is_authenticated %}
 
-                        <div class="dropdown">
+                        <div class="dropdown" >
                             <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
-                            style="background: #07889b; color: white;" 
+                            style="background: red; color: white; "
                             >
                                 {{user.username}}
                                 {% if user.userprofile.image_url %}
