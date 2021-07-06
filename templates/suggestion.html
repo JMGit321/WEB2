@@ -32,13 +32,13 @@
                 </div>
 
                 <div class="col-12 col-lg-7">
-                    <form class="contact-form">
-                        <input type="text" placeholder="Cidade">
-                        <input type="text" placeholder="Estado">
-                        <input type="text" placeholder="Quem precisa?">
-                        <input type="text" placeholder="Valor limite de arrecadação">
-                        <textarea rows="15" cols="6" placeholder="Nos explique a causa"></textarea>
-
+                    <form class="contact-form" method="POST" action="submit">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        
+                        <input type="text" name="donatario" placeholder="Quem precisa?">
+                        <input type="text" name="meta" placeholder="Valor limite de arrecadação">
+                        <textarea rows="15" name="texto" cols="6" placeholder="Nos explique a causa"></textarea>
                         <span>
                             <input class="btn gradient-bg" type="submit" value="Enviar sugestão">
                         </span>

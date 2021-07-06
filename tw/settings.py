@@ -29,7 +29,7 @@ DEBUG = True
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'thecharityteste@gmail.com'
+EMAIL_HOST_USER = 'thecharity21@gmail.com'
 EMAIL_HOST_PASSWORD = 'Teste123@'
 EMAIL_PORT = 587
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -89,7 +89,7 @@ DATABASES = {
         'NAME': 'db',
         'HOST': '127.0.0.1',
         'PASSWORD': '',
-        'USER': 'root',
+        'USER': 'django',
         'PORT': '3306',
     }
 }

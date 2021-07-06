@@ -21,7 +21,6 @@
                     <th scope="col">Ação</th>
 				</tr>
 			</thead>
-            
             {% for doacao in doacoes %}
                 {% if doacao.pago == False %}
                     <tbody>
@@ -31,13 +30,35 @@
                             <td> {{doacao.usuario.username}} </td>
                             <td> {{doacao.data}} </td>
                             <td>
-                                <a href="/validar/confirm/{{ doacao.id }}" class="btn" style="color: #fff; background-color: #07889b;"> Validar </a>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"> Validar </button>
+                                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index: 10000;">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel"><strong>Validar doação</strong></h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Deseja validar esta doação?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar
+                                                    </button>
+                
+                                                    <a href="/validar/confirm/{{ doacao.id }}">
+                                                        <button type="button" class="btn btn-success">Validar</button>
+                                                    </a>
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
                             </td>
                         </tr>
                         
                     </tbody>
-                {% else %}
-                    <p>Não há doações para serem validadas</p>
                 {% endif %}
                 
 			{% endfor %}
@@ -45,6 +66,13 @@
         </table>
     </div>
 
+    <script>
+        function confirm_donate(){
+            if(confirm('Tem certeza que deseja validar esta doação ?')){
+                document.formDonate.submit();
+            }
+        }
+    </script>
     {% if evento %}
 
     {% include "model-footer.html" with teste=evento %}

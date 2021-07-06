@@ -159,18 +159,10 @@
                         </div>-->
 
                         <div class="payment-type d-flex flex-wrap align-items-center">
-                            <h4 class="w-100 mt-5">Método de pagamento</h4>
+                            <h4 class="w-100 mt-5">Insira os dados para o boleto</h4>
 
                             <label class="d-flex align-items-center mt-4">
-                                <input type="radio" name="card" value="Card"/>
-                                <span class="payment-type-radio"></span>
-                                <span class="centered-dot"></span>
-
-                                Cartão de crédito
-                            </label>
-
-                            <label class="d-flex align-items-center mt-4">
-                                <input type="radio" name="boleto" value="Boleto"/>
+                                <input type="radio" name="boleto" value="Boleto" />
                                 <span class="payment-type-radio"></span>
                                 <span class="centered-dot"></span>
 
@@ -178,30 +170,10 @@
                             </label>
                         </div>
                         <div class="container">
-                            <div class="Card select">
-                                <label class="mt-4">Nome do titular</label>
-                                <input type="text" class="form-control form-control-user" 
-                                style="width: 20%" name="titular">
-                                <label class="mt-2">Número do cartão de crédito</label>
-                                <input class="form-control form-control-user" type="text" 
-                                style="width: 20%;" name="numero" onkeypress="MascaraCartao(formDonate.numero)" 
-                                maxlength="19" />
-                                <label class="mt-2">Data de validade</label>
-                                <input type="text" class="form-control form-control-user" 
-                                style="width: 20%" maxlength="7" name="validade" 
-                                onkeypress="MascaraData(formDonate.validade)" 
-                                onblur="ValidaData(formDonate.validade)">
-
-                                <label class="mt-2">Código de segurança</label>
-                                <input type="text" maxlength="3" class="form-control form-control-user"
-                                style="width: 20%" max="999" name="cvc" onkeypress="MascaraCVC(formDonate.cvc)" 
-                                >
-                            </div>
-
+                            
                             <div class="Boleto select">
                                 <label class="mt-4">Nome completo</label>
-                                <input type="text" name="nome" class="form-control form-control-user" 
-                                style="width: 20%">
+                                <input type="text" name="nome" class="form-control form-control-user" style="width: 20%">
                                 <label class="mt-4">CPF</label>
                                 <input type="text" name="cpf" class="form-control form-control-user" 
                                 style="width: 20%" maxlength="14" onkeypress="MascaraCPF(formDonate.cpf)"

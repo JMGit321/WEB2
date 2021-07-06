@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from .models import Causa,Doacao, UserProfile
+from .models import Causa,Doacao, UserProfile, Sugestao
 from django.db.models import Max
 from django.template.defaulttags import register
 from django.core.paginator import Paginator
@@ -86,12 +86,13 @@ def submit_login(request):
             messages.error(request,'Usuário ou Senha inválidos. Por favor tentar novamente.')
     return redirect('/login')
 
-
+@login_required(login_url='/login')
 def profile(request, id):
     user = User.objects.get(id=id)
     causas = Causa.objects.filter(usuario=user.id)
     doacoes = Doacao.objects.filter(usuario=user.id)
-    return render(request, 'profile.html', {'user':user, 'causas':causas, 'doacoes':doacoes})
+    sugestoes = Sugestao.objects.filter(usuario=user)
+    return render(request, 'profile.html', {'user':user, 'causas':causas, 'doacoes':doacoes, 'sugestoes':sugestoes})
 
 def completed_causes(request):
     causas = Causa.objects.filter(ativo=False)
@@ -342,6 +343,7 @@ def sobre(request):
 
 
 def contato(request):
+    user = request.user
     causas_all2 =  Causa.objects.filter(ativo=True).order_by('-data')
     cont = 0
     evento = {}
@@ -350,11 +352,22 @@ def contato(request):
         cont+=1
         if(cont==3):
             break
-    return render(request,'contact.html',{'evento':evento})
+    return render(request,'contact.html',{'evento':evento, 'user':user})
+    
+@login_required(login_url='/login')
+def send_msg(request):
+    msg = request.POST.get('msg')
+    user_id = request.POST.get('user-id')
+    user = User.objects.get(id=user_id)
+    print(user.email)
+    send_msg = EmailMultiAlternatives('Contato', msg, user.email, [settings.EMAIL_HOST_USER])
+    send_msg.send()
 
+    return redirect('/')
 
 def sugestao(request):
-    causas_all2 =  Causa.objects.filter(ativo=True).order_by('-data')
+
+    causas_all2 = Causa.objects.filter(ativo=True).order_by('-data')
     cont = 0
     evento = {}
     for c in causas_all2:
@@ -363,6 +376,44 @@ def sugestao(request):
         if(cont==3):
             break
     return render(request, 'suggestion.html', {'evento':evento})
+
+def send_suggestion(request):
+    donatario = request.POST.get('donatario')
+    meta = request.POST.get('meta')
+    texto = request.POST.get('texto')
+    usuario = request.user
+
+    if donatario and meta and texto:
+        sugestao = Sugestao.objects.create(donatario=donatario, meta=meta, texto=texto, usuario=usuario)
+    else:
+        messages.error(request, 'Não deixe campos nulos')
+    return redirect('/')
+
+def validate_suggestion(request):
+
+    sugestoes = Sugestao.objects.filter(status=0)
+
+    causas_all2 = Causa.objects.filter(ativo=True).order_by('-data')
+    cont = 0
+    evento = {}
+    for c in causas_all2:
+        evento[c] = c
+        cont+=1
+        if(cont==3):
+            break
+    return render(request, 'validate-suggestion.html', {'evento':evento, 'sugestoes':sugestoes})
+
+def confirm_suggestion(request, id):
+    sugestao = Sugestao.objects.get(id=id)
+    sugestao.status = 1
+    sugestao.save()
+    return redirect('/sugestoes')
+
+def reject_suggestion(request, id):
+    sugestao = Sugestao.objects.get(id=id)
+    sugestao.status = 2
+    sugestao.save()
+    return redirect('/sugestoes')
 
 @register.filter
 def get_item(dictionary, key):
@@ -539,6 +590,7 @@ def validate_donate(request, id):
     donate.save()
 
     return redirect('/validar/')
+
 
 def help(request):
     causa = Causa.objects.filter(ativo=True)

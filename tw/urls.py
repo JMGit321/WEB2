@@ -26,6 +26,7 @@ urlpatterns = [
 
     path('galeria/',views.galeria),
     path('contato/',views.contato),
+    path('contato/submit', views.send_msg),
     path('postagens/',views.postagens),
     path('causas/',views.causas),
     path('causas/register/', views.register_cause),
@@ -35,6 +36,10 @@ urlpatterns = [
     path('galeria/<id>/submit', views.donate_cause),
     path('sobre/',views.sobre),
     path('sugestao/', views.sugestao),
+    path('sugestao/submit', views.send_suggestion),
+    path('sugestoes/', views.validate_suggestion),
+    path('sugestoes/confirm/<id>', views.confirm_suggestion),
+    path('sugestoes/reject/<id>', views.reject_suggestion),
     path('validar/', views.donates),
     path('validar/confirm/<id>', views.validate_donate),
 

@@ -48,8 +48,10 @@ class UserProfile(models.Model):
 class Sugestao(models.Model):
     data = models.DateField(auto_now=True)
     horario = models.TimeField(auto_now=True)
+    meta = models.DecimalField(max_digits=10,decimal_places=2)
+    donatario = models.CharField(max_length=60)
     usuario = models.ForeignKey(User,on_delete=models.CASCADE)
     texto = models.TextField()
-
+    status = models.SmallIntegerField(default=0)
     class Meta:
         db_table = 'sugestao'

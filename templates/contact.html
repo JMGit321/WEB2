@@ -46,11 +46,11 @@
                 </div><!-- .col -->
 
                 <div class="col-12 col-lg-7">
-                    <form class="contact-form">
-                        <input type="text" placeholder="Nome">
-                        <input type="email" placeholder="Email">
-                        <textarea rows="15" cols="6" placeholder="Mensagens"></textarea>
-
+                    <form class="contact-form" method="POST" action="submit">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <input type="hidden" name='user-id' value="{{ user.id }}">
+                        <textarea rows="15" cols="6" name="msg" placeholder="Mensagem"></textarea>
                         <span>
                             <input class="btn gradient-bg" type="submit" value="Contate-nos">
                         </span>

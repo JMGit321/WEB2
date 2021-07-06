@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>The Charity</title>
+    {% load static %}
+    <!-- Required meta tags -->
+    {% include "style.html" %}
+</head>
+<body class="single-page contact-page">
+    {% include "model-header.html" %}
+    <div class="page-header" style="background-image:url('{% static 'images/sugestao.jpg' %}')">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h1>Sugestões</h1>
+                </div><!-- .col -->
+            </div><!-- .row -->
+        </div><!-- .container -->
+    </div><!-- .page-header -->
+
+    <div class="container">
+		<h2 class="sub">Sugestões</h2>
+		{% if sugestoes %}
+			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col">Donatário</th>
+						<th scope="col">Meta</th>
+						<th scope="col">Descrição</th>
+						<th scope="col">Ação</th>
+					</tr>
+				</thead>
+				{% for sugestao in sugestoes %}
+					<tbody>
+						<tr>
+							<td>{{sugestao.donatario}}</td>
+							<td>{{sugestao.meta}}</td>
+							<td style="word-wrap: break-word; overflow-wrap: break-word; width: 20px;"><p style="width: 500px;">{{sugestao.texto}}</p></p></td>
+							<td>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Validar</button>
+                                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index: 10000;">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel"><strong>Validar sugestão</strong></h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Deseja VALIDAR esta sugestão?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar
+                                                    </button>
+                
+                                                    <a href="/sugestoes/confirm/{{ sugestao.id }}">
+                                                        <button type="button" class="btn btn-success">Confirmar</button>
+                                                    </a>
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal1">Rejeitar</button>
+                                <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index: 10000;">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel"><strong>Rejeitar sugestão</strong></h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Deseja REJEITAR esta sugestão?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar
+                                                    </button>
+                
+                                                    <a href="/sugestoes/reject/{{ sugestao.id }}">
+                                                        <button type="button" class="btn btn-success">Confirmar</button>
+                                                    </a>
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+
+            
+						</tr>
+					</tbody>
+				{% endfor %}
+			</table>
+		{% else %}
+			<p>Não há sugestões</p>
+		{% endif %}
+    </div>
+    {% if evento %}
+
+    {% include "model-footer.html" with teste=evento %}
+    {% else %}
+        {% include "model-footer.html" %}
+    {% endif %}
+    {% include "model-js.html" %}
+</body>
+</html>
