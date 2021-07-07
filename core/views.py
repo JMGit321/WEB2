@@ -91,8 +91,13 @@ def profile(request, id):
     user = User.objects.get(id=id)
     causas = Causa.objects.filter(usuario=user.id)
     doacoes = Doacao.objects.filter(usuario=user.id)
-    sugestoes = Sugestao.objects.filter(usuario=user)
-    return render(request, 'profile.html', {'user':user, 'causas':causas, 'doacoes':doacoes, 'sugestoes':sugestoes})
+    causas_rodape = Causa.objects.all()
+    return render(request, 'profile.html', {'user':user, 'causas':causas, 'doacoes':doacoes, 'evento':causas_rodape})
+
+def my_suggestions(request, id):
+    user = User.objects.get(id=id)
+    sugestoes = Sugestao.objects.filter(usuario=user.id)
+    return render(request, 'my-suggestions.html', {'sugestoes':sugestoes})
 
 def completed_causes(request):
     causas = Causa.objects.filter(ativo=False)
@@ -103,14 +108,23 @@ def forgot_pass(request):
 
 def reset_pass(request):
     username = request.POST.get('username')
-    user = User.objects.get(username=username)
-    html_content = render_to_string('email-pass.html', {'user':user})
-    text_content = strip_tags(html_content)
-    msg = EmailMultiAlternatives('Redefinir Senha', text_content, settings.EMAIL_HOST_USER, [user.email])
-    msg.attach_alternative(html_content, "text/html")
-    msg.send()
+    if username:
+        try:
+            user = User.objects.get(username=username)
+        except:
+            user = None;
+        if user:
+            html_content = render_to_string('email-pass.html', {'user':user})
+            text_content = strip_tags(html_content)
+            msg = EmailMultiAlternatives('Redefinir Senha', text_content, settings.EMAIL_HOST_USER, [user.email])
+            msg.attach_alternative(html_content, "text/html")
+            msg.send()
+        else:
+            messages.error(request, "Este usuário não existe!")
+    else:
+        messages.error(request, "Não deixe o campo nulo!")
+
     return render(request, 'forgot-password.html')
-    
 
 
 def confirm_reset(request, id):
@@ -362,8 +376,8 @@ def send_msg(request):
     print(user.email)
     send_msg = EmailMultiAlternatives('Contato', msg, user.email, [settings.EMAIL_HOST_USER])
     send_msg.send()
-
-    return redirect('/')
+    messages.success(request, 'Sua sugestão foi enviada, obrigado!')
+    return redirect('/contato')
 
 def sugestao(request):
 
@@ -377,6 +391,7 @@ def sugestao(request):
             break
     return render(request, 'suggestion.html', {'evento':evento})
 
+@login_required(login_url='/login')
 def send_suggestion(request):
     donatario = request.POST.get('donatario')
     meta = request.POST.get('meta')
@@ -385,9 +400,10 @@ def send_suggestion(request):
 
     if donatario and meta and texto:
         sugestao = Sugestao.objects.create(donatario=donatario, meta=meta, texto=texto, usuario=usuario)
+        messages.success(request, 'Sua sugestão foi enviada! Aguarde a validação da mesma no seu perfil, obrigado.')
     else:
         messages.error(request, 'Não deixe campos nulos')
-    return redirect('/')
+    return redirect('/sugestao')
 
 def validate_suggestion(request):
 
@@ -524,40 +540,20 @@ def donate_cause(request, id):
         comp = float(causa.meta) - float(causa.recebido) 
         if float(valor) <= comp:
             usuario = request.user
-            if 'card' in request.POST:
-                titular = request.POST.get('titular')
-                numero = request.POST.get('numero')
-                validade = request.POST.get('validade')
-                cvc = request.POST.get('cvc')
-                if titular and numero and validade and cvc:
-                    if titular.isdigit():
-                        messages.error(request, 'O nome titular não é válido!!!')
-                    else:
-                        messages.success(request, 'Doação efetuada com sucesso!!!')
-                        doacao = Doacao.objects.create(valor=valor, usuario=usuario, causa=causa)
-                        
+            user = request.user
+            nome = request.POST.get('nome')
+            cpf = request.POST.get('cpf')
+            endereco = request.POST.get('endereco')
+            cep = request.POST.get('cep')
 
-                else:
-                     messages.error(request, 'Não deixe campos nulos!!!')
-            else:
-                user = request.user
-                nome = request.POST.get('nome')
-                cpf = request.POST.get('cpf')
-                endereco = request.POST.get('endereco')
-                cep = request.POST.get('cep')
-
-                recebido = float(causa.recebido)
-                #causa.recebido = recebido + float(valor)
-                #presta atenção nessas paradas, desleixado
-                if causa.recebido == causa.meta:
-                    causa.ativo = False
-                causa.save()
+            if nome and cpf and endereco and cep:
                 boleto = generate_boleto(user, valor, nome, cpf, endereco, cep)
                 context = {"boleto":boleto}
                 pdf = render_to_pdf('boleto.html', context)
                 doacao = Doacao.objects.create(valor=valor, usuario=usuario, causa=causa)
-               
                 return HttpResponse(pdf, content_type='application/pdf')
+            else:
+                messages.error(request, 'Não deixe os campos nulos!')
         else:
             messages.error(request, 'O valor informado excede a meta!!!')
     else:
@@ -583,10 +579,17 @@ def donates(request):
 
 def validate_donate(request, id):
     donate = Doacao.objects.get(id=id)
-    donate.pago = True
+    donate.pago = 1
     donate.causa.recebido += donate.valor
     donate.causa.recebido
     donate.causa.save()
+    donate.save()
+
+    return redirect('/validar/')
+
+def reject_donate(request, id):
+    donate = Doacao.objects.get(id=id)
+    donate.pago = 2
     donate.save()
 
     return redirect('/validar/')

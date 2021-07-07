@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <title>The Charity</title>
     {% load static %}
@@ -32,12 +32,26 @@
                 </div>
 
                 <div class="col-12 col-lg-7">
+                    {% for message in messages %}
+                        {% if message.tags == 'error' %}
+                            <div class="alert alert-danger" role="alert">
+                            <strong>Erro! </strong>{{message}}
+                          </div>
+                        {% else %}
+                            <div class="alert alert-success" role="alert">
+                            <strong>Sucesso! </strong>{{message}}
+                          </div>
+                        {% endif %}
+                      
+                    {% endfor %}
                     <form class="contact-form" method="POST" action="submit">
+                        <p> <strong>*OBS:</strong> É necessário estar autenticado no nosso site. </p>
                         {% csrf_token %}
                         {{ form.as_p }}
                         
                         <input type="text" name="donatario" placeholder="Quem precisa?">
-                        <input type="text" name="meta" placeholder="Valor limite de arrecadação">
+                        <input  class="form-control" type="number" name="meta" placeholder="Valor limite de arrecadação" min="1">
+                        <br>
                         <textarea rows="15" name="texto" cols="6" placeholder="Nos explique a causa"></textarea>
                         <span>
                             <input class="btn gradient-bg" type="submit" value="Enviar sugestão">

@@ -42,6 +42,8 @@ urlpatterns = [
     path('sugestoes/reject/<id>', views.reject_suggestion),
     path('validar/', views.donates),
     path('validar/confirm/<id>', views.validate_donate),
+    path('validar/reject/<id>', views.reject_donate),
+    path('profile/sugestoes/<id>', views.my_suggestions),
 
     path('login/',views.login_user),
     path('login/submit', views.submit_login),

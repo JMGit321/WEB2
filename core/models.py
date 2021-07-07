@@ -24,7 +24,7 @@ class Doacao(models.Model):
     causa = models.ForeignKey(Causa, on_delete=models.CASCADE)
     data = models.DateField(auto_now=True)
     horario = models.TimeField(auto_now=True)
-    pago = models.BooleanField(default=False)
+    pago = models.SmallIntegerField(default=0)
     def __str__(self):
         return self.causa.titulo
 

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <title>The Charity</title>
+    {% load static %}
+    <!-- Required meta tags -->
+    {% include "style.html" %}
+</head>
+<body class="single-page contact-page">
+   
+    {% include 'model-header.html' %} 
+    <div class="container">
+		<h2 class="sub">Minhas sugestões</h2>
+		{% if sugestoes %}
+			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col">Donatário</th>
+						<th scope="col">Meta</th>
+						<th scope="col">Descrição</th>
+						<th scope="col">Status</th>
+					</tr>
+				</thead>
+				{% for sugestao in sugestoes %}
+					<tbody>
+						<tr>
+							<td>{{sugestao.donatario}}</td>
+							<td>{{sugestao.meta}}</td>
+							<td style="word-wrap: break-word; overflow-wrap: break-word; width: 20px;"><p style="width: 500px;">{{sugestao.texto}}</p></p></td>
+							{% if sugestao.status == 0 %}
+								<td> <p style="color: green;">EM ANÁLISE</p> </td>
+							{% elif sugestao.status == 1 %}
+								<td> <p style="color: blue;">CONFIRMADA</p> </td>
+							{% elif sugestao.status == 2 %}
+								<td> <p style="color:darkred;">REJEITADA</p> </td>
+							{% endif %}
+							
+						</tr>
+					</tbody>
+				{% endfor %}
+			</table>
+		{% else %}
+			<p>Não há sugestões</p>
+		{% endif %}
+	</div>
+
+    {% if evento %}
+
+        {% include "model-footer.html" with teste=evento %}
+    {% else %}
+        {% include "model-footer.html" %}
+    {% endif %}
+    {% include "model-js.html" %}
+</body>
+</html>
