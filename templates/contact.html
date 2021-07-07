@@ -46,9 +46,15 @@
 
                 <div class="col-12 col-lg-7">
                     {% for msg in messages %}
-                        <div class="alert alert-success" role="alert">
-                            <strong>Sucesso! </strong>{{msg}}
-                        </div>
+                        {% if msg.tags == 'error' %}
+                            <div class="alert alert-danger" role="alert">
+                                <strong>Error! </strong>{{msg}}
+                            </div>
+                        {% else %}
+                            <div class="alert alert-success" role="alert">
+                                <strong>Sucesso! </strong>{{msg}}
+                            </div>
+                        {% endif %}
                     {% endfor %}
                     <form class="contact-form" method="POST" action="submit">
                         <p> <strong>*OBS: </strong> É necessário estar autenticado no nosso site.</p>

@@ -47,7 +47,7 @@ def home(request):
         valor = Causa.objects.filter(ativo=True).aggregate(Max('meta'))
         valor = valor['meta__max']
 
-        causa = Causa.objects.filter(ativo=True, meta=valor).order_by('-data')
+        causa = Causa.objects.filter(ativo=True, meta=valor).order_by('-horario')
         causa_dest = {}
         for c in causa:
             causa_dest[c] = c
@@ -58,7 +58,7 @@ def home(request):
         calculo2 = {}
         for c in causas_all:
              calculo2[c] = int(c.recebido/c.meta*100)
-        causas_all2 =  Causa.objects.filter(ativo=True).order_by('-data')
+        causas_all2 =  Causa.objects.filter(ativo=True).order_by('-horario')
         cont = 0
         evento = {}
         for c in causas_all2:
@@ -274,7 +274,7 @@ def delete_cause(request, id):
 def galeria(request):
     causa = Causa.objects.filter(ativo=True)
     if causa:
-        causas_all2 =  Causa.objects.filter(ativo=True).order_by('-data')
+        causas_all2 =  Causa.objects.filter(ativo=True).order_by('-horario')
         cont = 0
         evento = {}
         for c in causas_all2:
@@ -289,7 +289,7 @@ def galeria(request):
 def single(request,id):
     causa = Causa.objects.get(id=id)
     calculo = {'calc':int(causa.recebido/causa.meta*100)}
-    causas_all2 =  Causa.objects.filter(ativo=True).order_by('-data')
+    causas_all2 =  Causa.objects.filter(ativo=True).order_by('-horario')
     cont = 0
     evento = {}
     for c in causas_all2:
@@ -304,11 +304,11 @@ def postagens(request):
     string = request.GET.get('search')
 
     if string:
-        causa = Causa.objects.filter(ativo=True,titulo__icontains=string).order_by('-data')
+        causa = Causa.objects.filter(ativo=True,titulo__icontains=string).order_by('-horario')
     else:
-        causa = Causa.objects.filter(ativo=True).order_by('-data')# o sinal de menos inverte a ordem
+        causa = Causa.objects.filter(ativo=True).order_by('-horario')# o sinal de menos inverte a ordem
     if causa:
-        causas_all2 =  Causa.objects.filter(ativo=True).order_by('-data')
+        causas_all2 =  Causa.objects.filter(ativo=True).order_by('-horario')
         cont = 0
         evento = {}
         for c in causas_all2:
@@ -329,7 +329,7 @@ def postagens(request):
             calculo = {'calc':int(c.recebido/c.meta*100)}
         return render(request,'news.html',{'users':users,'calc':calculo,'causa2':causa2,'evento':evento})
     else:
-        causas_all2 =  Causa.objects.filter(ativo=True).order_by('-data')
+        causas_all2 =  Causa.objects.filter(ativo=True).order_by('-horario')
         cont = 0
         evento = {}
         for c in causas_all2:
@@ -343,7 +343,7 @@ def postagens(request):
 
 
 def sobre(request):
-    causas_all2 =  Causa.objects.filter(ativo=True).order_by('-data')
+    causas_all2 =  Causa.objects.filter(ativo=True).order_by('-horario')
     cont = 0
     evento = {}
     for c in causas_all2:
@@ -358,7 +358,7 @@ def sobre(request):
 
 def contato(request):
     user = request.user
-    causas_all2 =  Causa.objects.filter(ativo=True).order_by('-data')
+    causas_all2 =  Causa.objects.filter(ativo=True).order_by('-horario')
     cont = 0
     evento = {}
     for c in causas_all2:
@@ -371,17 +371,19 @@ def contato(request):
 @login_required(login_url='/login')
 def send_msg(request):
     msg = request.POST.get('msg')
-    user_id = request.POST.get('user-id')
-    user = User.objects.get(id=user_id)
-    print(user.email)
-    send_msg = EmailMultiAlternatives('Contato', msg, user.email, [settings.EMAIL_HOST_USER])
-    send_msg.send()
-    messages.success(request, 'Sua sugestão foi enviada, obrigado!')
+    if msg:
+        user_id = request.POST.get('user-id')
+        user = User.objects.get(id=user_id)
+        send_msg = EmailMultiAlternatives('Contato', msg, user.email, [settings.EMAIL_HOST_USER])
+        send_msg.send()
+        messages.success(request, 'Sua mensagem foi enviada, obrigado!')
+    else:
+        messages.error(request, 'Não deixe campos nulos!')
     return redirect('/contato')
 
 def sugestao(request):
 
-    causas_all2 = Causa.objects.filter(ativo=True).order_by('-data')
+    causas_all2 = Causa.objects.filter(ativo=True).order_by('-horario')
     cont = 0
     evento = {}
     for c in causas_all2:
@@ -409,7 +411,7 @@ def validate_suggestion(request):
 
     sugestoes = Sugestao.objects.filter(status=0)
 
-    causas_all2 = Causa.objects.filter(ativo=True).order_by('-data')
+    causas_all2 = Causa.objects.filter(ativo=True).order_by('-horario')
     cont = 0
     evento = {}
     for c in causas_all2:
@@ -441,15 +443,15 @@ def causas(request):
     string = request.GET.get('search')
 
     if string:
-        causas_all = Causa.objects.filter(ativo=True,titulo__icontains=string).order_by('-data')
+        causas_all = Causa.objects.filter(ativo=True,titulo__icontains=string).order_by('-horario')
     else:
-        causas_all = Causa.objects.filter(ativo=True).order_by('-data')
+        causas_all = Causa.objects.filter(ativo=True).order_by('-horario')
 
     if causas_all:
         valor = Causa.objects.filter(ativo=True).aggregate(Max('meta'))
         valor = valor['meta__max']
 
-        causa = Causa.objects.filter(ativo=True, meta=valor).order_by('-data')
+        causa = Causa.objects.filter(ativo=True, meta=valor).order_by('-horario')
         causa_dest = {}
         for c in causa:
             causa_dest[c] = c
@@ -462,7 +464,7 @@ def causas(request):
 
         for c in causas_all:
              calculo2[c] = int(c.recebido/c.meta*100)
-        causas_all2 =  Causa.objects.filter(ativo=True).order_by('-data')
+        causas_all2 =  Causa.objects.filter(ativo=True).order_by('-horario')
         cont = 0
         evento = {}
         for c in causas_all2:
@@ -601,7 +603,7 @@ def reject_donate(request, id):
 def help(request):
     causa = Causa.objects.filter(ativo=True)
     if causa:
-        causas_all2 =  Causa.objects.filter(ativo=True).order_by('-data')
+        causas_all2 =  Causa.objects.filter(ativo=True).order_by('-horario')
         cont = 0
         evento = {}
         for c in causas_all2:

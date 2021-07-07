@@ -6,6 +6,7 @@ from django.db.models.signals import post_save
 class Causa(models.Model):
     titulo = models.CharField(max_length=60)
     data = models.DateField(auto_now=True)
+    horario = models.TimeField(auto_now=True)
     meta = models.DecimalField(max_digits=10,decimal_places=2)
     recebido = models.DecimalField(max_digits=10,decimal_places=2,default=0)
     descricao = models.TextField()
