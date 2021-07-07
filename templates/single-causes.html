@@ -133,64 +133,69 @@
                 <div class="donation-form-wrap">
                     <h2>Faça uma doação</h2>
 
-                    <h4 class="mt-5">O quanto você deseja doar para esta causa?</h4>
+                    {% if causa.ativo == True %}
+                        <h4 class="mt-5">O quanto você deseja doar para esta causa?</h4>
 
 
-                    <form class="donation-form" name="formDonate" action="submit", method="post">
-                        {% csrf_token %}
-                        {{ form.as_p }}
-                         <div class="billing-information  d-flex flex-wrap justify-content-between align-items-center">
-                           <input type="number" name="causa-id" value="{{causa.id}}" hidden>
-                            <input type="number" id="nota" name="nota" class="form-control" min="1">
-                            
-                        </div>
-
-                       
-
-                        <!--<div class="billing-information  d-flex flex-wrap justify-content-between align-items-center">
-                            <h4 class="w-100 mt-5 mb-3">Informações de pagamento</h4>
-
-                            <input type="text" placeholder="Nome">
-                            <input type="email" placeholder="E-mail">
-                            <input type="text" placeholder="Endereço">
-                            <input type="text" placeholder="Cidade">
-                            <input type="text" placeholder="Estado">
-                            <input type="text" placeholder="País">
-                        </div>-->
-
-                        <div class="payment-type d-flex flex-wrap align-items-center">
-                            <h4 class="w-100 mt-5">Insira os dados para o boleto</h4>
-
-                            <label class="d-flex align-items-center mt-4">
-                                <input type="radio" name="boleto" value="Boleto" />
-                                <span class="payment-type-radio"></span>
-                                <span class="centered-dot"></span>
-
-                                Boleto
-                            </label>
-                        </div>
-                        <div class="container">
-                            
-                            <div class="Boleto select">
-                                <label class="mt-4">Nome completo</label>
-                                <input type="text" name="nome" class="form-control form-control-user" style="width: 20%">
-                                <label class="mt-4">CPF</label>
-                                <input type="text" name="cpf" class="form-control form-control-user" 
-                                style="width: 20%" maxlength="14" onkeypress="MascaraCPF(formDonate.cpf)"
-                                >
-                                <label class="mt-4">Endereço</label>
-                                <input type="text" name="endereco" class="form-control form-control-user" 
-                                style="width: 20%">
-                                <label class="mt-4">CEP</label>
-                                <input type="text" name="cep" class="form-control form-control-user" 
-                                style="width: 20%" onkeypress="MascaraCep(formDonate.cep)" maxlength="10" 
-                                >
+                        <form class="donation-form" name="formDonate" action="submit", method="post">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <div class="billing-information  d-flex flex-wrap justify-content-between align-items-center">
+                            <input type="number" name="causa-id" value="{{causa.id}}" hidden>
+                                <input type="number" id="nota" name="nota" class="form-control" min="1">
+                                
                             </div>
 
-                        </div>
+                        
 
-                       <button id="confirm-donate" onclick="confirm_donate()" class="btn btn-primary mt-5" type="submit">Efetivar Doação</button> 
-                    </form>
+                            <!--<div class="billing-information  d-flex flex-wrap justify-content-between align-items-center">
+                                <h4 class="w-100 mt-5 mb-3">Informações de pagamento</h4>
+
+                                <input type="text" placeholder="Nome">
+                                <input type="email" placeholder="E-mail">
+                                <input type="text" placeholder="Endereço">
+                                <input type="text" placeholder="Cidade">
+                                <input type="text" placeholder="Estado">
+                                <input type="text" placeholder="País">
+                            </div>-->
+
+                            <div class="payment-type d-flex flex-wrap align-items-center">
+                                <h4 class="w-100 mt-5">Insira os dados para o boleto</h4>
+
+                                <label class="d-flex align-items-center mt-4">
+                                    <input type="radio" name="boleto" value="Boleto" />
+                                    <span class="payment-type-radio"></span>
+                                    <span class="centered-dot"></span>
+
+                                    Boleto
+                                </label>
+                            </div>
+                            <div class="container">
+                                
+                                <div class="Boleto select">
+                                    <label class="mt-4">Nome completo</label>
+                                    <input type="text" name="nome" class="form-control form-control-user" style="width: 20%">
+                                    <label class="mt-4">CPF</label>
+                                    <input type="text" name="cpf" class="form-control form-control-user" 
+                                    style="width: 20%" maxlength="14" onkeypress="MascaraCPF(formDonate.cpf)"
+                                    >
+                                    <label class="mt-4">Endereço</label>
+                                    <input type="text" name="endereco" class="form-control form-control-user" 
+                                    style="width: 20%">
+                                    <label class="mt-4">CEP</label>
+                                    <input type="text" name="cep" class="form-control form-control-user" 
+                                    style="width: 20%" onkeypress="MascaraCep(formDonate.cep)" maxlength="10" 
+                                    >
+                                </div>
+
+                            </div>
+
+                        <button id="confirm-donate" onclick="confirm_donate()" class="btn btn-primary mt-5" type="submit">Efetivar Doação</button> 
+                        </form>
+                    {% else %}
+                        <h4 class="mt-5">Esta causa já atingiu sua meta, não é possível realizar outras doações!</h4>
+                    {% endif %}
+                        
                 </div>
             </div>
         </div>

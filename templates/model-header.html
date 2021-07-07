@@ -76,10 +76,10 @@
                              >  
                                 {% if user.is_superuser %}
                                     <a class="dropdown-item" href="/causas/register/">Cadastrar causa</a>
-                                    <a class="dropdown-item" href="/completed">Causas concluídas</a>
                                     <a class="dropdown-item" href="/validar">Validar doações</a>
                                     <a href="/sugestoes" class="dropdown-item">Validar sugestões</a>
                                 {% endif %}
+                                <a class="dropdown-item" href="/completed">Causas concluídas</a>
                                 <a class="dropdown-item" href="/profile/{{ user.id }}">Perfil</a>
                                 <a class="dropdown-item" href="/profile/sugestoes/{{ user.id }}">Minhas sugestões</a>
                                 <a class="dropdown-item" href="/logout">Sair</a>

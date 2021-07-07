@@ -581,7 +581,10 @@ def validate_donate(request, id):
     donate = Doacao.objects.get(id=id)
     donate.pago = 1
     donate.causa.recebido += donate.valor
-    donate.causa.recebido
+    
+    if donate.causa.recebido == donate.causa.meta:
+        donate.causa.ativo = False
+    
     donate.causa.save()
     donate.save()
 
